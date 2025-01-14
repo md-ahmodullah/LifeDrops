@@ -6,9 +6,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import auth from "../Firebase/firebase.init.js";
+import { auth } from "../Firebase/firebase.init.js";
 
-const googleProvider = new GoogleAuthProvider();
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
