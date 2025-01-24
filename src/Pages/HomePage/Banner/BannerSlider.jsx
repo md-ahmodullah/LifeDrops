@@ -26,7 +26,7 @@ export default () => {
       autoplay={{ delay: 4000, disableOnInteraction: false }}
     >
       <SwiperSlide>
-        <div className="bg-[url('https://i.ibb.co.com/J2VVLQk/slider7.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-end pr-24">
+        <div className="bg-[url('https://i.ibb.co.com/J2VVLQk/slider7.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-center md:justify-end pr-0 md:pr-24">
           <Slider
             title={"Every Drop Counts. Donate Blood, Save Lives"}
             subTitle={
@@ -36,7 +36,7 @@ export default () => {
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="bg-[url('https://i.ibb.co.com/KXsTdqm/slide01.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-start pl-20">
+        <div className="bg-[url('https://i.ibb.co.com/KXsTdqm/slide01.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-center md:justify-start pl-0 md:pl-20">
           <Slider
             title={"Finding Blood Made Easy, Connect with Donors"}
             subTitle={
@@ -46,7 +46,7 @@ export default () => {
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="bg-[url('https://i.ibb.co.com/C80Ggty/slider12.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-start pl-20">
+        <div className="bg-[url('https://i.ibb.co.com/C80Ggty/slider12.jpg')] h-[550px] bg-cover bg-center bg-no-repeat flex items-center justify-center md:justify-start pl-0 md:pl-20">
           <Slider
             title={"Join Our Community: Make a Lasting Impact"}
             subTitle={
