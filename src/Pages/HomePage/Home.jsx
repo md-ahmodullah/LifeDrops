@@ -1,7 +1,9 @@
+import BannerSliders from "./Banner/BannerSlider";
+
 export default function Home() {
   return (
     <section className="min-h-screen">
-      <h1>Home</h1>
+      <BannerSliders />
     </section>
   );
 }
