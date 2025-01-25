@@ -5,7 +5,11 @@ export default function FeaturedCard({ featured }) {
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <figure>
-        <img src={photo} alt={title} className="h-[200px] object-cover" />
+        <img
+          src={photo}
+          alt={title}
+          className="w-full h-[200px] object-cover"
+        />
       </figure>
       <div className="card-body">
         <div className="bg-red-600 w-28 px-2 py-1.5 rounded-tl-md rounded-br-md">
