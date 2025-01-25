@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar sticky top-0 bg-base-100 font-poppins">
+      <div className="navbar sticky top-0 z-10 bg-base-100 backdrop-blur-md bg-opacity-25 font-poppins lg:px-12">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -49,14 +49,14 @@ export default function Navbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold"
+              className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold"
             >
               {links}
             </ul>
           </div>
           <div className="flex items-center gap-2">
-            <img src={logo4} alt="Blood Logo" className="w-8 h-10" />
-            <Link className="text-3xl font-bold text-red-600">
+            <img src={logo4} alt="Blood Logo" className="w-7 h-9" />
+            <Link className="text-2xl md:text-3xl font-bold text-red-600">
               <span className="text-blue-700">Life</span>Drops
             </Link>
           </div>
@@ -81,7 +81,7 @@ export default function Navbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 p-2 shadow font-semibold"
             >
               <NavLink>
                 <li>
