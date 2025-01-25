@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "date": "14 June, 2017",
+    "title": "World Blood Day",
+    "description": "Your blood can save lives. Donate today. Help ensure a consistent blood supply.",
+    "time": "10:00 AM - 3:00 PM",
+    "location": "California, USA",
+    "photo": "https://i.ibb.co/N7NTzNZ/slider1.jpg"
+  },
+  {
+    "id": 2,
+    "date": "14 June, 2018",
+    "title": "Give Blood, Give Life",
+    "description": "Every donation makes a difference. Donate Blood Regularly",
+    "time": "9:00 AM - 4:00 PM",
+    "location": "New York, USA",
+    "photo": "https://i.ibb.co/cwmXkkg/camp1.jpg"
+  },
+  {
+    "id": 3,
+    "date": "14 June, 2019",
+    "title": "Safe Blood For All",
+    "description": "Donate blood now. Access to safe blood is essential for everyone.",
+    "time": "8:00 AM - 5:00 PM",
+    "location": "Florida, USA",
+    "photo": "https://i.ibb.co/ctwfjx1/camp2.jpg"
+  },
+  {
+    "id": 4,
+    "date": "14 June, 2020",
+    "title": "Blood Donors: Heroes",
+    "description": "Be a hero, donate blood now. Help ensure a consistent blood supply.",
+    "time": "9:00 AM - 4:00 PM",
+    "location": "Texas, USA",
+    "photo": "https://i.ibb.co/fd1XJrw/slider2.webp"
+  },
+  {
+    "id": 5,
+    "date": "14 June, 2021",
+    "title": "Donate Blood Regularly",
+    "description": "Help ensure a consistent blood supply. Be a hero",
+    "time": "10:00 AM - 3:00 PM",
+    "location": "California, USA",
+    "photo": "https://i.ibb.co/WKCXhPD/camp3.jpg"
+  },
+  {
+    "id": 6,
+    "date": "14 June, 2022",
+    "title": "Blood Donation Matters",
+    "description": "Your blood can save multiple lives. Donate blood now",
+    "time": "9:00 AM - 4:00 PM",
+    "location": "New York, USA",
+    "photo": "https://i.ibb.co/7Sjr3PY/slider3.jpg"
+  },
+  {
+    "id": 7,
+    "date": "14 June, 2023",
+    "title": "Strong Blood Systems",
+    "description": "Support a strong and reliable blood supply. Be a hero",
+    "time": "10:00 AM - 3:00 PM",
+    "location": "Illinois, USA",
+    "photo": "https://i.ibb.co/cwmXkkg/camp1.jpg"
+  },
+  {
+    "id": 8,
+    "date": "14 June, 2024",
+    "title": "Every Drop Counts",
+    "description": "Your donation makes a significant impact. Donate blood now",
+    "time": "9:00 AM - 4:00 PM",
+    "location": "Florida, USA",
+    "photo": "https://i.ibb.co/ctwfjx1/camp2.jpg"
+  }
+]
