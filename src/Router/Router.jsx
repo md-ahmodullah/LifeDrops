@@ -5,6 +5,7 @@ import Register from "../Pages/AuthPages/Register";
 import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/HomePage/Home";
 import Search from "../Pages/Search";
+import PrivateRoute from "../Router/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <Search />,
+        element: (
+          <PrivateRoute>
+            <Search />
+          </PrivateRoute>
+        ),
       },
     ],
   },
