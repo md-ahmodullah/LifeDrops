@@ -26,6 +26,8 @@ export default function Register() {
     const blood = form.blood.value;
     const district = form.district.value;
     const upazila = form.upazila.value;
+    const role = "donor";
+    const status = "active";
 
     const info = {
       name,
@@ -36,6 +38,8 @@ export default function Register() {
       blood,
       district,
       upazila,
+      role,
+      status,
     };
     console.log(info);
 
@@ -260,7 +264,7 @@ export default function Register() {
                       </span>
                     )}
                   </div>
-                  <button className="w-full btn bg-red-600 text-white font-bold">
+                  <button className="w-full btn bg-red-600 text-white font-bold hover:bg-blue-600">
                     Register
                   </button>
                 </div>

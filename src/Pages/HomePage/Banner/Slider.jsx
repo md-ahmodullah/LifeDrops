@@ -13,7 +13,7 @@ export default function Slider({ title, subTitle }) {
             text={"Join As A Donor"}
           />
           <BannerButton
-            link={"/"}
+            link={"/search"}
             btnVariant={"btn bg-red-600"}
             text={"Search Donors"}
           />

@@ -85,8 +85,9 @@ export default function Navbar() {
                 >
                   <div className="w-10 rounded-full">
                     <img
-                      alt="Tailwind CSS Navbar component"
+                      alt="profile"
                       src={user?.photoURL}
+                      title={user?.displayName}
                     />
                   </div>
                 </div>
@@ -111,7 +112,7 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="btn bg-blue-600 text-white border-none"
+                className="btn bg-red-600 text-white border-none hover:bg-blue-600"
               >
                 Login
               </Link>

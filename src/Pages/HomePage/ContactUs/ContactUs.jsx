@@ -129,7 +129,7 @@ export default function ContactUs() {
                   ></textarea>
                 </div>
                 <div className="md:col-span-2">
-                  <button className="w-full btn bg-red-600 border-none text-white font-bold">
+                  <button className="w-full btn bg-red-600 border-none text-white font-bold hover:bg-blue-500">
                     Send Message
                   </button>
                 </div>

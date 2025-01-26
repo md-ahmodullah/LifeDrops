@@ -106,7 +106,7 @@ export default function Login() {
                       <IoWarning className="text-xl" /> {errMessage}
                     </span>
                   )}
-                  <button className="w-full btn bg-red-600 text-white font-bold">
+                  <button className="w-full btn bg-red-600 text-white font-bold hover:bg-blue-600">
                     Login
                   </button>
                 </div>
