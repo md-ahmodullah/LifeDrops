@@ -8,7 +8,6 @@ export default function Featured() {
       .then((res) => res.json())
       .then((data) => setFeatureds(data));
   }, []);
-  console.log(featureds);
 
   return (
     <section className="w-10/12 mx-auto my-5">

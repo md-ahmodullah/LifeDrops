@@ -8,7 +8,7 @@ export default function Slider({ title, subTitle }) {
         <p className="text-base text-gray-700 w-11/12">{subTitle}</p>
         <div className="flex gap-4">
           <BannerButton
-            link={"/"}
+            link={"/register"}
             btnVariant={"btn btn-primary"}
             text={"Join As A Donor"}
           />

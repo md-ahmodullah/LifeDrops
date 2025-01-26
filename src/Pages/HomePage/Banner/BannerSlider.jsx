@@ -26,7 +26,7 @@ export default () => {
       autoplay={{ delay: 4000, disableOnInteraction: false }}
     >
       <SwiperSlide>
-        <div className="bg-[url('https://i.ibb.co.com/J2VVLQk/slider7.jpg')] h-[550px] bg-cover lg:bg-center bg-no-repeat flex items-center justify-center md:justify-end pr-0 md:pr-4 lg:pr-24 bg-red-200 bg-opacity-80 md:bg-opacity-70 bg-blend-overlay">
+        <div className="bg-[url('https://i.ibb.co.com/J2VVLQk/slider7.jpg')] h-[550px] bg-cover lg:bg-center bg-no-repeat flex items-center justify-center md:justify-end pr-0 md:pr-4 lg:pr-24 bg-red-400 bg-opacity-80 md:bg-opacity-50 bg-blend-overlay">
           <Slider
             title={"Every Drop Counts. Donate Blood, Save Lives"}
             subTitle={
