@@ -64,7 +64,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <img src={logo4} alt="Blood Logo" className="w-7 h-9" />
             <Link className="text-2xl md:text-3xl font-bold text-red-600">
-              <span className="text-blue-700">Life</span>Drops
+              <span className="text-blue-600">Life</span>Drops
             </Link>
           </div>
         </div>
@@ -109,7 +109,10 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-primary">
+              <Link
+                to="/login"
+                className="btn bg-blue-600 text-white border-none"
+              >
                 Login
               </Link>
             </>

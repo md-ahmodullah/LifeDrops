@@ -42,7 +42,7 @@ export default function Login() {
     <>
       <div className="hero bg-base-300 min-h-screen font-poppins">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 items-center ">
-          <div className="text-center lg:text-left bg-red-700 min-h-screen flex flex-col items-center justify-center">
+          <div className="text-center lg:text-left bg-red-700 md:min-h-screen flex flex-col items-center justify-center pt-5 md:pt-0">
             <div className="w-10/12 mx-auto">
               <h1 className="text-xl lg:text-3xl font-bold text-gray-200 text-center">
                 Finding Blood Made Easy <br /> Connect with Donors

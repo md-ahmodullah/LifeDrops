@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { IoChevronBackOutline, IoWarning } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import login2 from "../../assets/images/login2.png";
 import register from "../../assets/images/register.png";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
@@ -85,38 +86,42 @@ export default function Register() {
   return (
     <>
       <div className="hero bg-base-300 min-h-screen font-poppins">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-center lg:text-left bg-red-700 min-h-screen flex flex-col items-center justify-center">
-            <div className="w-10/12 mx-auto">
-              <h1 className="text-3xl font-bold text-gray-200 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="text-center lg:text-left bg-red-700 md:min-h-screen flex flex-col items-center justify-center md:justify-start lg:justify-center pt-5 md:pt-0">
+            <div className="w-10/12 mx-auto md:pt-24 lg:pt-0">
+              <h1 className="text-xl lg:text-3xl font-bold text-gray-200 text-center">
                 Join Our Community <br /> Make a Lasting Impact
               </h1>
-              <p className="p-6 text-gray-300 text-center">
+              <p className="p-6 text-gray-300 text-center text-sm lg:text-base">
                 Need blood for yourself or a loved one? Our platform connects
                 you with available donors and blood drives in your area.
                 Register as a recipient and receive the support you need quickly
                 and efficiently.
               </p>
               <img src={register} alt="" />
+              <img src={login2} alt="" className="hidden md:grid lg:hidden" />
             </div>
           </div>
-          <div className="px-8 space-y-8">
-            <Link to="/" className="flex items-center gap-1 text-red-700">
-              <IoChevronBackOutline />
-              Back Home
-            </Link>
+          <div className="px-5 md:pr-5 md:px-0 lg:px-8 space-y-8">
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-center">
+              <Link
+                to="/"
+                className="flex items-center gap-1 text-red-700 py-3"
+              >
+                <IoChevronBackOutline />
+                Back Home
+              </Link>
+              <h1 className="text-xl lg:text-3xl font-bold text-center">
                 Register An Account
               </h1>
-              <p className="text-center text-red-600 font-medium">
+              <p className="text-center text-red-600 font-medium text-sm lg:text-base">
                 Every Drop Counts. Donate Blood, Save Lives
               </p>
             </div>
             <div className="border border-white shadow-md rounded-sm bg-transparent">
               <form
                 onSubmit={handleSubmit}
-                className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="p-3 lg:p-6 grid grid-cols-1 lg:grid-cols-2 gap-4"
               >
                 <div>
                   <label className="label">
@@ -247,7 +252,7 @@ export default function Register() {
                     required
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className="lg:col-span-2">
                   <div>
                     {errMessage && (
                       <span className="text-xs text-red-500 flex items-center gap-1 pb-3 font-medium">
