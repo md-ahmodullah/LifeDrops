@@ -95,7 +95,7 @@ export default function Navbar() {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 p-2 shadow font-semibold"
                 >
-                  <NavLink>
+                  <NavLink to="/dashboard">
                     <li>
                       <a>Dashboard</a>
                     </li>
