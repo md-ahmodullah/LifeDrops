@@ -2,11 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import HomeLayout from "../Layout/HomeLayout";
 import Login from "../Pages/AuthPages/Login";
 import Register from "../Pages/AuthPages/Register";
+import Blogs from "../Pages/Blogs";
 import CreateDonation from "../Pages/Dashboard/CreateDonation";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import Profile from "../Pages/Dashboard/Profile";
+import DonationRequest from "../Pages/DonationRequest";
 import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/HomePage/Home";
 import Search from "../Pages/Search";
@@ -21,6 +23,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/donationRequests",
+        element: <DonationRequest />,
+      },
+      {
+        path: "/blogs",
+        element: <Blogs />,
       },
       {
         path: "/search",

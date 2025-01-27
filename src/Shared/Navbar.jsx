@@ -6,24 +6,19 @@ import logo4 from "../assets/logo/logo4.png";
 export default function Navbar() {
   const links = (
     <>
-      <NavLink>
+      <NavLink to="">
         <li>
           <a>Home</a>
         </li>
       </NavLink>
-      <NavLink>
+      <NavLink to="/donationRequests">
         <li>
           <a>Donation Requests</a>
         </li>
       </NavLink>
-      <NavLink>
+      <NavLink to="/blogs">
         <li>
           <a>Blogs</a>
-        </li>
-      </NavLink>
-      <NavLink>
-        <li>
-          <a>Funding</a>
         </li>
       </NavLink>
     </>
