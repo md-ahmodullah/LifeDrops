@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import avatar from "../assets/images/avatar.png";
 import searchImg from "../assets/images/login2.png";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
@@ -9,6 +10,7 @@ export default function Search() {
   const [matched, setMatched] = useState([]);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
+  const user = "";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ export default function Search() {
   console.log(matched);
   return (
     <>
-      <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-12">
+      <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center w-10/12 mx-auto">
           <div className="col-span-2">
             <Link
@@ -135,11 +137,135 @@ export default function Search() {
             </div>
           </div>
           <div>
-            <img src={searchImg} alt="" />
+            {matched.length === 1 ? (
+              <div>
+                {matched.map((match, i) => (
+                  <div key={i} className="p-2 w-11/12 mx-auto">
+                    <div className="bg-red-200 backdrop-blur-md bg-opacity-10 rounded-md min-h-80 border border-red-200">
+                      <div className="flex flex-col items-center gap-1 pt-3">
+                        <div className="pb-2">
+                          <img
+                            src={match.photoURL || avatar}
+                            alt=""
+                            className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
+                          />
+                        </div>
+                        <p className="text-xs font-normal text-gray-200">
+                          {match?.email}
+                        </p>
+                        <h1 className="text-xl md:text-2xl font-bold text-gray-200 uppercase">
+                          {match?.name}
+                        </h1>
+                      </div>
+                      <div className="px-5">
+                        <div className="flex items-center justify-between pb-1 pt-2">
+                          <h1 className="text-base md:text-lg font-medium text-gray-200">
+                            Matched Donor
+                          </h1>
+                        </div>
+                        <hr />
+                      </div>
+                      <div className="px-5 pt-2 pb-3">
+                        <form>
+                          <div>
+                            <span className="label-text text-white font-semibold">
+                              Donor Name : {match.name}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="label-text text-white font-semibold">
+                              Donor Email : {match.email}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="label-text text-white font-semibold">
+                              Blood Group : {match.blood}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="label-text text-white font-semibold">
+                              District : {match.district}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="label-text text-white font-semibold">
+                              Upazila : {match.upazila}
+                            </span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>
+                <img src={searchImg} alt="" />
+              </div>
+            )}
           </div>
         </div>
-        <div className="py-12">
-          <h1>{matched.length}</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 w-10/12 mx-auto py-6">
+          {matched.length >= 2
+            ? matched.map((match, i) => (
+                <div key={i} className="p-2">
+                  <div className="bg-red-200 backdrop-blur-md bg-opacity-10 rounded-md min-h-80 border border-red-200">
+                    <div className="flex flex-col items-center gap-1 pt-3">
+                      <div className="pb-2">
+                        <img
+                          src={match.photoURL || avatar}
+                          alt=""
+                          className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
+                        />
+                      </div>
+                      <p className="text-xs font-normal text-gray-200">
+                        {match?.email}
+                      </p>
+                      <h1 className="text-xl md:text-2xl font-bold text-gray-200 uppercase">
+                        {match?.name}
+                      </h1>
+                    </div>
+                    <div className="px-5">
+                      <div className="flex items-center justify-between pb-1 pt-2">
+                        <h1 className="text-base md:text-lg font-medium text-gray-200">
+                          Matched Donor
+                        </h1>
+                      </div>
+                      <hr />
+                    </div>
+                    <div className="px-5 pt-2 pb-3">
+                      <form>
+                        <div>
+                          <span className="label-text text-white font-semibold">
+                            Donor Name : {match.name}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="label-text text-white font-semibold">
+                            Donor Email : {match.email}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="label-text text-white font-semibold">
+                            Blood Group : {match.blood}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="label-text text-white font-semibold">
+                            District : {match.district}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="label-text text-white font-semibold">
+                            Upazila : {match.upazila}
+                          </span>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              ))
+            : ""}
         </div>
       </section>
     </>
