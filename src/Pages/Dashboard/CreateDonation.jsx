@@ -1,9 +1,14 @@
+// import Lottie from "lottie-react";
+// <Lottie animationData={deep} loop={true} />
 import { useContext, useState } from "react";
-import { IoChevronBackOutline, IoWarning } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { IoWarning } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import { AuthContext } from "../../Provider/AuthProvider";
+// import deep from "/public/deep.json";
+import createDonation from "../../assets/images/create.png";
+import createDonation2 from "../../assets/images/create2.png";
 export default function CreateDonation() {
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
@@ -44,27 +49,20 @@ export default function CreateDonation() {
   return (
     <>
       <div className="bg-base-300 font-poppins">
-        <div className="">
-          <div className="px-5 md:pr-5 lg:px-8 space-y-5">
-            <div className="space-y-2">
-              <Link
-                to="/"
-                className="flex items-center gap-1 text-red-700 py-3"
-              >
-                <IoChevronBackOutline />
-                Back Home
-              </Link>
-              <h1 className="text-xl lg:text-3xl font-bold text-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-0 pb-8">
+          <div className="px-5 md:pr-5 lg:px-8 space-y-5 lg:col-span-2 order-2 lg:order-1">
+            <div className="space-y-1 lg:pt-5">
+              <h1 className="text-xl lg:text-2xl font-bold text-center">
                 Create Donation Request
               </h1>
-              <p className="text-center text-red-600 font-medium text-sm lg:text-base">
+              <p className="text-center text-red-600 font-medium text-xs lg:text-sm">
                 Every Drop Counts. Donate Blood, Save Lives
               </p>
             </div>
             <div className="border border-white shadow-md rounded-sm bg-base-200">
               <form
                 onSubmit={handleSubmit}
-                className="p-3 lg:p-6 grid grid-cols-1 lg:grid-cols-2 gap-4"
+                className="p-3 lg:p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
               >
                 <div>
                   <label className="label">
@@ -221,7 +219,7 @@ export default function CreateDonation() {
                     required
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className="col-span-1 md:col-span-2">
                   <label className="label">
                     <span className="label-text text-red-700 font-semibold">
                       Request Message
@@ -234,7 +232,7 @@ export default function CreateDonation() {
                     required
                   ></textarea>
                 </div>
-                <div className="lg:col-span-2">
+                <div className="col-span-1 md:col-span-2">
                   <div>
                     {errMessage && (
                       <span className="text-xs text-red-500 flex items-center gap-1 pb-3 font-medium">
@@ -248,6 +246,10 @@ export default function CreateDonation() {
                 </div>
               </form>
             </div>
+          </div>
+          <div className="py-2 flex items-center justify-center lg:flex-col order-1 lg:order-2">
+            <img src={createDonation2} alt="" className="w-1/4 lg:w-2/3" />
+            <img src={createDonation} alt="" className="w-1/4 lg:w-2/3" />
           </div>
         </div>
       </div>
