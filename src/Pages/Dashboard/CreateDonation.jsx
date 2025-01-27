@@ -113,10 +113,9 @@ export default function CreateDonation() {
                   <select
                     name="blood"
                     className="px-4 py-2 w-full outline-none border-none"
+                    required
                   >
-                    <option disabled selected>
-                      Select
-                    </option>
+                    <option value="">Select</option>
                     <option>A+</option>
                     <option>A-</option>
                     <option>B+</option>
@@ -136,10 +135,9 @@ export default function CreateDonation() {
                   <select
                     name="district"
                     className="px-4 py-2 w-full outline-none border-none"
+                    required
                   >
-                    <option disabled selected>
-                      Select
-                    </option>
+                    <option value="">Select</option>
                     {districts.map((district, i) => (
                       <option key={i}>{district?.name}</option>
                     ))}
@@ -154,10 +152,9 @@ export default function CreateDonation() {
                   <select
                     name="upazila"
                     className="px-4 py-2 w-full outline-none border-none"
+                    required
                   >
-                    <option disabled selected>
-                      Select
-                    </option>
+                    <option value="">Select</option>
                     {upazilas.map((upazila, i) => (
                       <option key={i}>{upazila?.name}</option>
                     ))}

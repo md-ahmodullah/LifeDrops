@@ -14,7 +14,17 @@ export default function Profile() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsEditable(false);
+    const form = e.target;
+    const name = form.name.value;
+    const photoURL = form.photo.value;
+    const email = form.email.value;
+    const blood = form.blood.value;
+    const district = form.district.value;
+    const upazila = form.upazila.value;
+    const updateInfo = { name, photoURL, email, blood, district, upazila };
+    console.log(updateInfo);
   };
+
   return (
     <>
       <section className="bg-base-300 flex justify-center items-start min-h-screen py-4 lg:pt-12">
