@@ -3,6 +3,7 @@
 import { useContext, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -19,6 +20,8 @@ export default function CreateDonation() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
+    const requesterName = user?.displayName;
+    const requesterEmail = user?.email;
     const name = form.name.value;
     const blood = form.blood.value;
     const district = form.district.value;
@@ -32,6 +35,8 @@ export default function CreateDonation() {
     const status = "pending";
 
     const request = {
+      requesterEmail,
+      requesterName,
       name,
       blood,
       district,
@@ -43,7 +48,24 @@ export default function CreateDonation() {
       message,
       status,
     };
-    console.log(request);
+
+    fetch("http://localhost:5000/donationRequest", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(request),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your request has been created!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      });
   };
 
   return (

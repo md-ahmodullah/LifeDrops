@@ -1,25 +1,39 @@
+import axios from "axios";
+import { useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import searchImg from "../assets/images/login2.png";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
 export default function Search() {
+  const [matched, setMatched] = useState([]);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const blood = form.blood.value;
     const district = form.district.value;
     const upazila = form.upazila.value;
 
-    const info = {
+    const formData = {
       blood,
       district,
       upazila,
     };
-    console.log(info);
+    console.log(formData);
+    try {
+      const result = await axios
+        .get("http://localhost:5000/users", {
+          params: { blood: blood, district: district, upazila: upazila },
+        })
+        .then((res) => setMatched(res.data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
+  console.log(matched);
   return (
     <>
       <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-12">
@@ -62,17 +76,15 @@ export default function Search() {
                           name="blood"
                           className="px-4 py-2 w-full outline-none border-none rounded"
                         >
-                          <option disabled selected>
-                            Select
-                          </option>
-                          <option>A+</option>
-                          <option>A-</option>
-                          <option>B+</option>
-                          <option>B-</option>
-                          <option>AB+</option>
-                          <option>AB-</option>
-                          <option>O+</option>
-                          <option>O-</option>
+                          <option value="">Select</option>
+                          <option value={"A+"}>A+</option>
+                          <option value={"A-"}>A-</option>
+                          <option value={"B+"}>B+</option>
+                          <option value={"B-"}>B-</option>
+                          <option value={"AB+"}>AB+</option>
+                          <option value={"AB-"}>AB-</option>
+                          <option value={"O+"}>O+</option>
+                          <option value={"O-"}>O-</option>
                         </select>
                       </div>
                       <div>
@@ -85,11 +97,11 @@ export default function Search() {
                           name="district"
                           className="px-4 py-2 w-full outline-none border-none rounded"
                         >
-                          <option disabled selected>
-                            Select
-                          </option>
+                          <option value="">Select</option>
                           {districts.map((district, i) => (
-                            <option key={i}>{district?.name}</option>
+                            <option key={i} value={district?.name}>
+                              {district?.name}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -103,11 +115,11 @@ export default function Search() {
                           name="upazila"
                           className="px-4 py-2 w-full outline-none border-none rounded"
                         >
-                          <option disabled selected>
-                            Select
-                          </option>
+                          <option value="">Select</option>
                           {upazilas.map((upazila, i) => (
-                            <option key={i}>{upazila?.name}</option>
+                            <option key={i} value={upazila?.nam}>
+                              {upazila?.name}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -125,6 +137,9 @@ export default function Search() {
           <div>
             <img src={searchImg} alt="" />
           </div>
+        </div>
+        <div className="py-12">
+          <h1>{matched.length}</h1>
         </div>
       </section>
     </>
