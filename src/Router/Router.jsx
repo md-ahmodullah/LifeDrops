@@ -5,6 +5,9 @@ import Register from "../Pages/AuthPages/Register";
 import Blogs from "../Pages/Blogs";
 import CreateDonation from "../Pages/Dashboard/CreateDonation";
 // import Dashboard from "../Pages/Dashboard/Dashboard";
+import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
+import AllUsers from "../Pages/AdminDashboard/AllUsers";
+import ContentManagement from "../Pages/AdminDashboard/ContentManagement";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DashboardLayout from "../Pages/Dashboard/DashBoardLayout";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
@@ -98,6 +101,30 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CreateDonation />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <PrivateRoute>
+            <AllUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-blood-donation-request",
+        element: (
+          <PrivateRoute>
+            <AllDonationRequest />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/content-management",
+        element: (
+          <PrivateRoute>
+            <ContentManagement />
           </PrivateRoute>
         ),
       },

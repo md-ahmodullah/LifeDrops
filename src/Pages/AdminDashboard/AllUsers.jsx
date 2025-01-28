@@ -1,30 +1,21 @@
 import axios from "axios";
-import Lottie from "lottie-react";
 import { useContext, useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { FaEye } from "react-icons/fa6";
-import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
 import logo4 from "../../assets/logo/logo4.png";
-import useDonationRequest from "../../Hooks/useDonationRequest";
+import useAllUsers from "../../Hooks/useAllUsers";
 import { AuthContext } from "../../Provider/AuthProvider";
-import deep from "/public/deep.json";
 export default function AllUsers() {
-  const [myDonations] = useDonationRequest("");
-  const [myDonationRequest, setMyDonationRequest] = useState(myDonations);
   const [status, setStatus] = useState("All");
+  const [fliterUsers, setFilterUsers] = useState([]);
   const { user } = useContext(AuthContext);
   const email = user?.email;
+  const [users] = useAllUsers();
 
   useEffect(() => {
     axios
-      .get(
-        `https://life-drops-server-seven.vercel.app/donationRequest?status=${status}`,
-        {
-          params: { requesterEmail: email },
-        }
-      )
-      .then((res) => setMyDonationRequest(res.data));
+      .get("https://life-drops-server-seven.vercel.app/users", {
+        params: { status: status },
+      })
+      .then((res) => setFilterUsers(res.data));
   }, [status]);
 
   const handleStatusChange = (e) => {
@@ -32,11 +23,6 @@ export default function AllUsers() {
     setStatus(selectedStatus);
   };
 
-  const formatDate = (date) => {
-    const options = { day: "2-digit", month: "short", year: "numeric" };
-    const datee = new Date(date);
-    return datee.toLocaleDateString("en-US", options);
-  };
   return (
     <>
       <section className="font-poppins w-11/12 mx-auto">
@@ -44,91 +30,71 @@ export default function AllUsers() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-4">
               <div>
-                <img src={logo4} alt="Blood Logo" className="w-8 h-11" />
+                <img src={logo4} alt="Blood Logo" className="w-6 h-8" />
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  Your All Donation Request({myDonationRequest.length})
+                  All Users({users.length})
                 </h1>
-                <p className="text-xs text-red-500 font-medium w-11/12">
-                  Every Drop Counts. Donate Blood, Save Lives
-                </p>
               </div>
             </div>
-            <div className="pr-8">
+            <form className="pr-8">
               <select
                 className="select select-bordered w-full max-w-xs"
                 onChange={handleStatusChange}
               >
                 <option value="All">All</option>
-                <option value="pending">Pending</option>
-                <option value="inprogress">Inprogress</option>
-                <option value="done">Done</option>
-                <option value="cancel">Canceled</option>
+                <option value="active">Active</option>
+                <option value="block">Block</option>
               </select>
-            </div>
+            </form>
           </div>
           <div>
-            {myDonationRequest.length !== 0 ? (
-              <>
-                <div className="overflow-x-auto pt-6">
-                  <table className="table table-xs">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Group</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+            <>
+              <div className="overflow-x-auto pt-6">
+                <table className="table table-xs">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((userr, i) => (
+                      <tr key={userr._id}>
+                        <th className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={userr.photoURL}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </th>
+                        <td>{userr.name}</td>
+                        <td>{userr.email}</td>
+                        <td>{userr.role}</td>
+                        <td>{userr.status}</td>
+                        <td className="flex items-center gap-2 pb-4">
+                          <button className="btn btn-sm bg-red-600 border-none text-white hover:btn-ghost">
+                            Block
+                          </button>
+                          <button className="btn btn-sm bg-green-500 border-none text-white hover:btn-ghost">
+                            Volunteer
+                          </button>
+                          <button className="btn btn-sm bg-blue-600 border-none text-white hover:btn-ghost">
+                            Admin
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {myDonationRequest.map((myDonation, i) => (
-                        <tr key={myDonation._id}>
-                          <th>{i + 1}</th>
-                          <td>{myDonation.name}</td>
-                          <td>{myDonation.address}</td>
-                          <td>{formatDate(myDonation.date)}</td>
-                          <td>{myDonation.blood}</td>
-                          <td>{myDonation.status}</td>
-                          <td className="flex items-center gap-2 pb-4">
-                            <Link to="/">
-                              <FaEye
-                                className="text-base text-green-700"
-                                title="View"
-                              />
-                            </Link>
-                            <Link to="/">
-                              <FaEdit
-                                className="text-base text-blue-600"
-                                title="Edit"
-                              />
-                            </Link>
-                            <button>
-                              <MdDelete
-                                className="text-base text-red-600"
-                                title="Delete"
-                              />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            ) : (
-              <div className="min-h-[400px] flex flex-col items-center justify-center">
-                <h1 className="text-xl font-semibold pb-3 pt-10 md:pt-0">
-                  You haven't any donation request
-                </h1>
-                <div className="w-10/12 md:w-2/5 lg:w-1/4 mx-auto">
-                  <Lottie animationData={deep} loop={true} />
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            )}
+            </>
           </div>
         </div>
       </section>
