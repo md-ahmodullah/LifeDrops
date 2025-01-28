@@ -8,6 +8,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import Profile from "../Pages/Dashboard/Profile";
+import DetailsPage from "../Pages/DetailsPage";
 import DonationRequest from "../Pages/DonationRequest";
 import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/HomePage/Home";
@@ -27,6 +28,14 @@ export const router = createBrowserRouter([
       {
         path: "/donationRequests",
         element: <DonationRequest />,
+      },
+      {
+        path: "/details/:id",
+        element: (
+          <PrivateRoute>
+            <DetailsPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogs",
