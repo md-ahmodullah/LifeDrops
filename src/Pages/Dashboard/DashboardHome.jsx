@@ -5,9 +5,9 @@ import AdminHome from "../AdminDashboard/AdminHome";
 import DonorHome from "./DonorHome";
 export default function DashboardHome() {
   const { user } = useContext(AuthContext);
-  const isAdmin = true;
+  const isAdmin = false;
   const isVolunteer = false;
-  const isDonor = false;
+  const isDonor = true;
   return (
     <>
       <section className="w-11/12 mx-auto">

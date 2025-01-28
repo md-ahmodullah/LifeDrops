@@ -5,9 +5,11 @@ import Dashboard from "./Dashboard";
 
 export default function DashboardLayout() {
   const [users] = useAllUsers();
+  const admin = users.filter((user) => user?.role === "admin");
+  console.log(admin);
   const isAdmin = false;
-  const isVolunteer = true;
-  const isDonor = false;
+  const isVolunteer = false;
+  const isDonor = true;
 
   return (
     <div>
