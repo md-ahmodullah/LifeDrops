@@ -3,9 +3,9 @@ import VolunteerDashboard from "../VolunteerDashboard/VolunteerDashboard";
 import Dashboard from "./Dashboard";
 
 export default function DashboardLayout() {
-  const isAdmin = false;
+  const isAdmin = true;
   const isVolunteer = false;
-  const isDonor = true;
+  const isDonor = false;
 
   return (
     <div>
