@@ -18,9 +18,12 @@ export default function MyDonationRequest() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/donationRequest?status=${status}`, {
-        params: { requesterEmail: email },
-      })
+      .get(
+        `https://life-drops-server-seven.vercel.app/donationRequest?status=${status}`,
+        {
+          params: { requesterEmail: email },
+        }
+      )
       .then((res) => setMyDonationRequest(res.data));
   }, [status]);
 

@@ -40,7 +40,7 @@ export default function UpdatePage() {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/donationRequest/${id}`)
+      .get(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`)
       .then((res) => setUpdateRequest(res.data));
   }, []);
 
@@ -70,7 +70,7 @@ export default function UpdatePage() {
       message,
     };
 
-    fetch(`http://localhost:5000/donationRequest/${id}`, {
+    fetch(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

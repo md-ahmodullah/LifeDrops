@@ -27,7 +27,7 @@ export default function Search() {
     console.log(formData);
     try {
       const result = await axios
-        .get("http://localhost:5000/users", {
+        .get("https://life-drops-server-seven.vercel.app/users", {
           params: { blood: blood, district: district, upazila: upazila },
         })
         .then((res) => setMatched(res.data));

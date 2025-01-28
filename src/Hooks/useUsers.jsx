@@ -7,7 +7,7 @@ export default function useUsers() {
   const email = user?.email;
   useEffect(() => {
     axios
-      .get("http://localhost:5000/allusers", {
+      .get("https://life-drops-server-seven.vercel.app/allusers", {
         params: { email: email },
       })
       .then((res) => setUsers(res.data));

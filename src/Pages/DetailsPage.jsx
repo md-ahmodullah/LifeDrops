@@ -14,7 +14,7 @@ export default function DetailsPage() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/donationRequest/${id}`)
+      .get(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`)
       .then((res) => setDetails(res.data));
   }, []);
   const formatDate = (date) => {
@@ -29,7 +29,10 @@ export default function DetailsPage() {
     const modified = { status };
     console.log(modified);
     axios
-      .patch(`http://localhost:5000/donationRequest/${id}`, modified)
+      .patch(
+        `https://life-drops-server-seven.vercel.app/donationRequest/${id}`,
+        modified
+      )
       .then(() => {
         Swal.fire({
           position: "center",

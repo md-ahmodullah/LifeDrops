@@ -46,7 +46,7 @@ export default function CreateDonation() {
       status,
     };
 
-    fetch("http://localhost:5000/donationRequest", {
+    fetch("https://life-drops-server-seven.vercel.app/donationRequest", {
       method: "POST",
       headers: {
         "content-type": "application/json",

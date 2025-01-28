@@ -8,7 +8,7 @@ export default function DonationRequest() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/donationRequest", {
+      .get("https://life-drops-server-seven.vercel.app/donationRequest", {
         params: { status: "pending" },
       })
       .then((res) => setPendingDonation(res.data));

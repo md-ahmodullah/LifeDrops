@@ -1,7 +1,7 @@
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo4 from "../../assets/logo/logo4.png";
-export default function AdminDashboard() {
+export default function VolunteerDashboard() {
   const links = (
     <>
       <NavLink to="/dashboard/profile">
@@ -11,17 +11,12 @@ export default function AdminDashboard() {
       </NavLink>
       <NavLink to="/dashboard">
         <li>
-          <a>Admin Home</a>
-        </li>
-      </NavLink>
-      <NavLink to="/dashboard/all-users">
-        <li>
-          <a>All Users</a>
+          <a>Home</a>
         </li>
       </NavLink>
       <NavLink to="/dashboard/all-blood-donation-request">
         <li>
-          <a>All Donation Requests</a>
+          <a>All Donation Request</a>
         </li>
       </NavLink>
       <NavLink to="/dashboard/content-management">
@@ -67,7 +62,7 @@ export default function AdminDashboard() {
             </div>
             <div className="px-3">
               <p className="text-xl md:text-2xl font-bold text-gray-200">
-                Admin Dashboard
+                Volunteer Dashboard
               </p>
             </div>
           </section>

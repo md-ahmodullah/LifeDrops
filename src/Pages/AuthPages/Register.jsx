@@ -82,7 +82,7 @@ export default function Register() {
         const displayError = errorMessage?.split(").")[0];
         setErrMessage(displayError);
       });
-    fetch("http://localhost:5000/users", {
+    fetch("https://life-drops-server-seven.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

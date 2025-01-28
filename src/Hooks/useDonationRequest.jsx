@@ -9,7 +9,7 @@ export default function useDonationRequest({ status = "" }) {
     const userEmail = user?.email;
     if (userEmail) {
       axios
-        .get("http://localhost:5000/donationRequest", {
+        .get("https://life-drops-server-seven.vercel.app/donationRequest", {
           params: { requesterEmail: userEmail, status: status },
         })
         .then((res) => setMyDonations(res.data));
