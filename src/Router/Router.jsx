@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomeLayout from "../Layout/HomeLayout";
+import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard";
 import Login from "../Pages/AuthPages/Login";
 import Register from "../Pages/AuthPages/Register";
 import Blogs from "../Pages/Blogs";
@@ -13,7 +14,9 @@ import DonationRequest from "../Pages/DonationRequest";
 import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/HomePage/Home";
 import Search from "../Pages/Search";
+import UpdatePage from "../Pages/UpdatePage";
 import PrivateRoute from "../Router/PrivateRoute";
+import AdminRouter from "./AdminRouter";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <DetailsPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivateRoute>
+            <UpdatePage />
           </PrivateRoute>
         ),
       },
@@ -61,19 +72,35 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <DashboardHome />,
+        element: (
+          <PrivateRoute>
+            <DashboardHome />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/my-donation-requests",
-        element: <MyDonationRequest />,
+        element: (
+          <PrivateRoute>
+            <MyDonationRequest />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/create-donation-request",
-        element: <CreateDonation />,
+        element: (
+          <PrivateRoute>
+            <CreateDonation />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -84,5 +111,15 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/admin",
+    element: (
+      <PrivateRoute>
+        <AdminRouter>
+          <AdminDashboard />
+        </AdminRouter>
+      </PrivateRoute>
+    ),
   },
 ]);

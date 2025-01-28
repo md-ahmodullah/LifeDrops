@@ -1,13 +1,21 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import avatar from "../../assets/images/avatar.png";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
+import useUsers from "../../Hooks/useUsers";
 import { AuthContext } from "../../Provider/AuthProvider";
-import avatar from "../../assets/images/avatar.png";
 export default function Profile() {
+  const [loginUser, setLoginUser] = useState(null);
   const { user } = useContext(AuthContext);
+  const email = user?.email;
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
   const [isEditable, setIsEditable] = useState(false);
+  const { updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [users] = useUsers();
   const handleEdit = () => {
     setIsEditable(true);
   };
@@ -21,10 +29,30 @@ export default function Profile() {
     const blood = form.blood.value;
     const district = form.district.value;
     const upazila = form.upazila.value;
-    const updateInfo = { name, photoURL, email, blood, district, upazila };
-    console.log(updateInfo);
+    updateUserProfile({
+      displayName: name,
+      photoURL: photoURL,
+      blood: blood,
+      district: district,
+      upazila: upazila,
+    })
+      .then((result) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your profile has been updated!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate("/dashboard/profile");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message.split("auth/")[1];
+        const displayError = errorMessage.split(").")[0];
+        setErrMessage(displayError);
+      });
   };
-
   return (
     <>
       <section className="bg-base-300 flex justify-center items-start min-h-screen py-4 lg:pt-12">
@@ -91,7 +119,7 @@ export default function Profile() {
                       type="text"
                       placeholder="Name"
                       name="name"
-                      defaultValue="Md Ahmodullah"
+                      defaultValue={user?.displayName}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
                       required
                     />
@@ -106,7 +134,7 @@ export default function Profile() {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      value="mdahmodullah@gmail.com"
+                      value={user?.email}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
                       required
                     />
@@ -121,7 +149,7 @@ export default function Profile() {
                       type="text"
                       name="photo"
                       placeholder="Photo URL"
-                      defaultValue="hfhfhfh"
+                      defaultValue={users?.photoURL}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
                       required
                     />
@@ -132,21 +160,24 @@ export default function Profile() {
                         Blood Group
                       </span>
                     </label>
-                    <select
-                      name="blood"
-                      className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
-                      required
-                    >
-                      <option value="">{"will set"}</option>
-                      <option value="A+">A+</option>
-                      <option value="B+">B+</option>
-                      <option value="A-">A-</option>
-                      <option value="B-">B-</option>
-                      <option value="AB+">AB+</option>
-                      <option value="AB-">AB-</option>
-                      <option value="O+">O+</option>
-                      <option value="O-">O-</option>
-                    </select>
+                    {users.blood && (
+                      <select
+                        name="blood"
+                        className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
+                        defaultValue={users?.blood}
+                        required
+                      >
+                        <option value="">{"will set"}</option>
+                        <option value="A+">A+</option>
+                        <option value="B+">B+</option>
+                        <option value="A-">A-</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
+                    )}
                   </div>
                   <div>
                     <label className="label">
@@ -154,37 +185,44 @@ export default function Profile() {
                         District
                       </span>
                     </label>
-                    <select
-                      name="district"
-                      className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
-                      required
-                    >
-                      <option value="">{"will set"}</option>
-                      {districts.map((district, i) => (
-                        <option key={i} value={district?.name}>
-                          {district?.name}
-                        </option>
-                      ))}
-                    </select>
+                    {users?.district && (
+                      <select
+                        name="district"
+                        className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
+                        defaultValue={users?.district}
+                        required
+                      >
+                        <option value="">{"will set"}</option>
+                        {districts.map((district, i) => (
+                          <option key={i} value={district?.name}>
+                            {district?.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </div>
+
                   <div>
                     <label className="label">
                       <span className="label-text text-white font-semibold">
                         Upazila
                       </span>
                     </label>
-                    <select
-                      name="upazila"
-                      className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
-                      required
-                    >
-                      <option value="">{"will set"}</option>
-                      {upazilas.map((upazila, i) => (
-                        <option key={i} value={upazila?.name}>
-                          {upazila?.name}
-                        </option>
-                      ))}
-                    </select>
+                    {users.upazila && (
+                      <select
+                        name="upazila"
+                        className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
+                        defaultValue={users?.upazila}
+                        required
+                      >
+                        <option value="">{"will set"}</option>
+                        {upazilas.map((upazila, i) => (
+                          <option key={i} value={upazila?.name}>
+                            {upazila?.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </div>
                   {isEditable ? (
                     <div>

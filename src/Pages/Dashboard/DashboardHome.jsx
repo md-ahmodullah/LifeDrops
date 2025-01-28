@@ -176,7 +176,7 @@ export default function DashboardHome() {
                                 title="View"
                               />
                             </Link>
-                            <Link to="/">
+                            <Link to={`/update/${myDonation._id}`}>
                               <FaEdit
                                 className="text-base text-blue-600"
                                 title="Edit"

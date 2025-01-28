@@ -27,28 +27,6 @@ export default function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      //   if (currentUser?.email) {
-      //     const user = { email: currentUser.email };
-      //     axios
-      //       .post("https://edu-link-server.vercel.app/jwt", user, {
-      //         withCredentials: true,
-      //       })
-      //       .then((res) => {
-      //         console.log("login", res.data);
-      //         setLoading(false);
-      //       });
-      //   } else {
-      //     axios
-      //       .post(
-      //         "https://edu-link-server.vercel.app/logout",
-      //         {},
-      //         { withCredentials: true }
-      //       )
-      //       .then((res) => {
-      //         console.log("logout", res.data);
-      //         setLoading(false);
-      //       });
-      //   }
     });
     return () => {
       unsubscribe();

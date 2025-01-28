@@ -1,8 +1,7 @@
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo4 from "../../assets/logo/logo4.png";
-export default function Dashboard() {
-  const isAdmin = true;
+export default function AdminDashboard() {
   const links = (
     <>
       <NavLink to="/dashboard/profile">
@@ -12,17 +11,17 @@ export default function Dashboard() {
       </NavLink>
       <NavLink to="/dashboard">
         <li>
-          <a>Home</a>
+          <a>Admin Home</a>
         </li>
       </NavLink>
-      <NavLink to="/dashboard/my-donation-requests">
+      <NavLink to="/dashboard/all-blood-donation-request">
         <li>
-          <a>My Donation Requests</a>
+          <a>All Donation Requests</a>
         </li>
       </NavLink>
-      <NavLink to="/dashboard/create-donation-request">
+      <NavLink to="/dashboard/content-management">
         <li>
-          <a>Create Donation Request</a>
+          <a>Content Management</a>
         </li>
       </NavLink>
     </>
