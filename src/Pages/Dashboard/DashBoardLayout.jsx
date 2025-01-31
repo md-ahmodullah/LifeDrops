@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import useAllUsers from "../../Hooks/useAllUsers";
+import { AuthContext } from "../../Provider/AuthProvider";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import VolunteerDashboard from "../VolunteerDashboard/VolunteerDashboard";
 import Dashboard from "./Dashboard";
 
 export default function DashboardLayout() {
+  const { user } = useContext(AuthContext);
   const [users] = useAllUsers();
-  const admin = users.filter((user) => user?.role === "admin");
-  console.log(admin);
   const isAdmin = false;
   const isVolunteer = false;
   const isDonor = true;

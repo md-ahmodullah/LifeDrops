@@ -14,8 +14,6 @@ export default function Login() {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const credentials = { email, password };
-    console.log(credentials);
 
     const validation = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
     if (!validation.test(password)) {
@@ -28,7 +26,7 @@ export default function Login() {
         const newUser = result.user;
         setUser(newUser);
         Swal.fire("Login Successfully!");
-        navigate("/");
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorCode = error.code;
