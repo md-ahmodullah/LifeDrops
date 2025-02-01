@@ -8,6 +8,7 @@ import CreateDonation from "../Pages/Dashboard/CreateDonation";
 import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
 import AllUsers from "../Pages/AdminDashboard/AllUsers";
 import ContentManagement from "../Pages/AdminDashboard/ContentManagement";
+import BlogDetails from "../Pages/BlogDetails";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DashboardLayout from "../Pages/Dashboard/DashBoardLayout";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/blogs/:id",
+        element: <BlogDetails />,
       },
       {
         path: "/search",

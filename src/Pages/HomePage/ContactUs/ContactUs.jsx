@@ -3,7 +3,7 @@ import { FaEnvelope, FaLocationArrow } from "react-icons/fa";
 export default function ContactUs() {
   return (
     <>
-      <div className="bg-[url('https://i.ibb.co.com/GM6bLMz/slider10.jpg')] bg-cover bg-center bg-no-repeat bg-red-950 bg-blend-multiply bg-opacity-70 py-16 mt-24 mb-1">
+      <div className="bg-[url('https://i.ibb.co.com/GM6bLMz/slider10.jpg')] bg-fixed bg-cover bg-center bg-no-repeat bg-red-950 bg-blend-multiply bg-opacity-70 py-16 mt-24 mb-1">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 md:gap-8  items-center w-10/12 mx-auto">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl text-white font-bold pb-6">

@@ -7,6 +7,7 @@ import register from "../../assets/images/register.png";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function Register() {
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
@@ -97,6 +98,7 @@ export default function Register() {
 
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Register"} />
       <div className="hero bg-base-300 min-h-screen font-poppins">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="text-center lg:text-left bg-red-700 md:min-h-screen flex flex-col items-center justify-center md:justify-start lg:justify-center pt-5 md:pt-0">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import CustomHelmet from "../ReusableComponents/Helmet";
 export default function DonationRequest() {
   const [pendingDonation, setPendingDonation] = useState([]);
 
@@ -21,6 +22,7 @@ export default function DonationRequest() {
   };
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Donation Request"} />
       <div className="">
         <div className="flex items-center gap-2 py-5 md:pt-6 px-6 justify-center">
           <div>

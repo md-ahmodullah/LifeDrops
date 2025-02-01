@@ -6,6 +6,7 @@ import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function Profile() {
   const [loginUser, setLoginUser] = useState(null);
   const { user } = useContext(AuthContext);
@@ -55,6 +56,7 @@ export default function Profile() {
   };
   return (
     <>
+      <CustomHelmet title={"Dashboard | Profile"} />
       <section className="bg-base-300 flex justify-center items-start min-h-screen py-4 lg:pt-12">
         <div className="rounded-md border-2 border-red-400 p-2 w-11/12 md:w-4/5 lg:w-3/5 mx-auto bg-red-200">
           <div className="bg-gradient-to-t from-red-900 to-red-700 rounded-md min-h-80">

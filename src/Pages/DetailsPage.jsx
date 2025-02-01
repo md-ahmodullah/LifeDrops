@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import avatar from "../assets/images/avatar.png";
 import { AuthContext } from "../Provider/AuthProvider";
+import CustomHelmet from "../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function DetailsPage() {
   const [details, setDetails] = useState([]);
@@ -43,13 +44,11 @@ export default function DetailsPage() {
         });
         navigate("/donationRequests");
       });
-    // setPending((prev) =>
-    //   prev.filter((pendingItem) => pendingItem._id !== selectedAssignment._id)
-    // );
     document.getElementById("my_modal_5").close();
   };
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Request Details"} />
       <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-6">
         <div className="w-11/12 mx-auto">
           <Link

@@ -3,11 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import createDonation from "../assets/images/create.png";
+import createDonation2 from "../assets/images/create2.png";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
 import { AuthContext } from "../Provider/AuthProvider";
-import createDonation from "../assets/images/create.png";
-import createDonation2 from "../assets/images/create2.png";
+import CustomHelmet from "../ReusableComponents/Helmet";
 export default function UpdatePage() {
   const [updateRequest, setUpdateRequest] = useState([]);
   const [errMessage, setErrMessage] = useState("");
@@ -92,6 +93,7 @@ export default function UpdatePage() {
 
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Update Request"} />
       <div className="bg-base-300 font-poppins">
         <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-0 pb-8">
           <div className="px-5 md:pr-5 lg:px-8 space-y-5 lg:col-span-2 order-2 lg:order-1">

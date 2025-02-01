@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import logo4 from "../../assets/logo/logo4.png";
 import useDonationRequest from "../../Hooks/useDonationRequest";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function MyDonationRequest() {
   const [myDonations] = useDonationRequest("");
@@ -39,6 +40,7 @@ export default function MyDonationRequest() {
   };
   return (
     <>
+      <CustomHelmet title={"Dashboard | My Donation Request"} />
       <section className="font-poppins w-11/12 mx-auto">
         <div className="py-5">
           <div className="flex items-center justify-between">

@@ -1,9 +1,12 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
 import slider1 from "../assets/images/sliderImage/slider1.jpg";
+import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Blogs() {
+  const id = "b10a12gmsa36pscic70";
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Blogs"} />
       <section className="w-11/12 mx-auto py-8 min-h-screen font-poppins">
         <div>
           <div className="text-center space-y-5">
@@ -64,10 +67,7 @@ export default function Blogs() {
                   </p>
                 </div>
                 <div className="text-sm text-red-700 pr-8">
-                  <Link
-                    to="/blogs/b5jkskjadhas"
-                    className="flex items-center gap-1"
-                  >
+                  <Link to={`/blogs/${id}`} className="flex items-center gap-1">
                     <GoArrowUpRight /> View Details
                   </Link>
                 </div>

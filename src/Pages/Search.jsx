@@ -6,6 +6,7 @@ import avatar from "../assets/images/avatar.png";
 import searchImg from "../assets/images/login2.png";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
+import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Search() {
   const [matched, setMatched] = useState([]);
   const [districts] = useDistricts();
@@ -38,6 +39,7 @@ export default function Search() {
   console.log(matched);
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Search"} />
       <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center w-10/12 mx-auto">
           <div className="col-span-2">

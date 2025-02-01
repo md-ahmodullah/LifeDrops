@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import login from "../../assets/images/login.png";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function Login() {
   const { loginUser, user, setUser } = useContext(AuthContext);
   const [errMessage, setErrMessage] = useState("");
@@ -38,6 +39,7 @@ export default function Login() {
 
   return (
     <>
+      <CustomHelmet title={"LifeDrops | Login"} />
       <div className="hero bg-base-300 min-h-screen font-poppins">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 items-center ">
           <div className="text-center lg:text-left bg-red-700 md:min-h-screen flex flex-col items-center justify-center pt-5 md:pt-0">

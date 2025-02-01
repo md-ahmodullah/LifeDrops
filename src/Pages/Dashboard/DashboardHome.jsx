@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import logo4 from "../../assets/logo/logo4.png";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 import AdminHome from "../AdminDashboard/AdminHome";
 import DonorHome from "./DonorHome";
 export default function DashboardHome() {
@@ -10,6 +11,7 @@ export default function DashboardHome() {
   const isDonor = true;
   return (
     <>
+      <CustomHelmet title={"Dashboard | Home"} />
       <section className="w-11/12 mx-auto">
         <div className="py-5 md:py-10">
           <h1 className="text-xl md:text-3xl font-bold text-center text-red-700 uppercase">
