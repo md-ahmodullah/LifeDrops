@@ -11,7 +11,6 @@ export default function Search() {
   const [matched, setMatched] = useState([]);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
-  const user = "";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +24,6 @@ export default function Search() {
       district,
       upazila,
     };
-    console.log(formData);
     try {
       const result = await axios
         .get("https://life-drops-server-seven.vercel.app/users", {

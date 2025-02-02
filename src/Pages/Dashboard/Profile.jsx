@@ -1,22 +1,19 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import avatar from "../../assets/images/avatar.png";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
-import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function Profile() {
-  const [loginUser, setLoginUser] = useState(null);
-  const { user } = useContext(AuthContext);
-  const email = user?.email;
+  const [logginUser, setLogginUser] = useState(null);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
   const [isEditable, setIsEditable] = useState(false);
-  const { updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const [users] = useUsers();
+  const id = users?._id;
   const handleEdit = () => {
     setIsEditable(true);
   };
@@ -25,19 +22,21 @@ export default function Profile() {
     setIsEditable(false);
     const form = e.target;
     const name = form.name.value;
-    const photoURL = form.photo.value;
+    const photoURL = form.photoURL.value;
     const email = form.email.value;
     const blood = form.blood.value;
     const district = form.district.value;
     const upazila = form.upazila.value;
-    updateUserProfile({
-      displayName: name,
-      photoURL: photoURL,
-      blood: blood,
-      district: district,
-      upazila: upazila,
+    const updateUserInfo = { name, photoURL, blood, district, upazila };
+    fetch(`https://life-drops-server-seven.vercel.app/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateUserInfo),
     })
-      .then((result) => {
+      .then((res) => res.json())
+      .then((data) => {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -45,13 +44,6 @@ export default function Profile() {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/dashboard/profile");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message.split("auth/")[1];
-        const displayError = errorMessage.split(").")[0];
-        setErrMessage(displayError);
       });
   };
   return (
@@ -63,14 +55,16 @@ export default function Profile() {
             <div className="flex flex-col items-center gap-1 pt-3">
               <div className="pb-2">
                 <img
-                  src={user?.photoURL || avatar}
+                  src={users?.photoURL || avatar}
                   alt=""
                   className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
                 />
               </div>
-              <p className="text-xs font-normal text-gray-200">{user?.email}</p>
+              <p className="text-xs font-normal text-gray-200">
+                {users?.email}
+              </p>
               <h1 className="text-xl md:text-2xl font-bold text-gray-200 uppercase">
-                {user?.displayName}
+                {users?.name}
               </h1>
             </div>
             <div className="px-5">
@@ -91,20 +85,6 @@ export default function Profile() {
               </div>
               <hr />
             </div>
-            {/* <div className="px-5 pt-2 pb-8">
-              <p className="text-base font-normal text-gray-200">
-                <span className="font-medium text-gray-300">Blood Group: </span>{" "}
-                {user?.displayName}
-              </p>
-              <p className="text-base font-normal text-gray-200">
-                <span className="font-medium text-gray-300">Districts: </span>{" "}
-                {user?.displayName}
-              </p>
-              <p className="text-base font-normal text-gray-200">
-                <span className="font-medium text-gray-300">Upazila: </span>{" "}
-                {user?.email}
-              </p>
-            </div> */}
             <div className="px-5 pt-2 pb-8">
               <fieldset disabled={!isEditable}>
                 <form
@@ -121,7 +101,7 @@ export default function Profile() {
                       type="text"
                       placeholder="Name"
                       name="name"
-                      defaultValue={user?.displayName}
+                      defaultValue={users?.name}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
                       required
                     />
@@ -136,7 +116,7 @@ export default function Profile() {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      value={user?.email}
+                      value={users?.email}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
                       required
                     />
@@ -149,7 +129,7 @@ export default function Profile() {
                     </label>
                     <input
                       type="text"
-                      name="photo"
+                      name="photoURL"
                       placeholder="Photo URL"
                       defaultValue={users?.photoURL}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"

@@ -1,25 +1,17 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import useAllDonationRequest from "../Hooks/useAllDonationRequest";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function DonationRequest() {
-  const [pendingDonation, setPendingDonation] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://life-drops-server-seven.vercel.app/donationRequest", {
-        params: { status: "pending" },
-      })
-      .then((res) => setPendingDonation(res.data));
-  }, []);
+  const [pendingDonation] = useAllDonationRequest();
 
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
+
   return (
     <>
       <CustomHelmet title={"LifeDrops | Donation Request"} />

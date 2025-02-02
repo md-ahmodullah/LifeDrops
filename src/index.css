@@ -5,13 +5,7 @@
 @tailwind utilities;
 
 .active {
-  color: red;
-  text-decoration: underline;
-  font-size: 16px;
-}
-.menu .active {
   color: rgb(63, 158, 246);
-  text-decoration: underline;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }

@@ -1,16 +1,26 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import useAxiosSecure from "./useAxiosSecure";
 export default function useUsers() {
-  const [users, setUsers] = useState([]);
   const { user } = useContext(AuthContext);
   const email = user?.email;
-  useEffect(() => {
-    axios
-      .get("https://life-drops-server-seven.vercel.app/allusers", {
+  const axiosSecure = useAxiosSecure();
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allusers", {
         params: { email: email },
-      })
-      .then((res) => setUsers(res.data));
-  }, []);
-  return [users];
+      });
+      return res.data;
+    },
+  });
+  // useEffect(() => {
+  //   axios
+  //     .get("https://life-drops-server-seven.vercel.app/allusers", {
+  //       params: { email: email },
+  //     })
+  //     .then((res) => setUsers(res.data));
+  // }, []);
+  return [users, refetch];
 }

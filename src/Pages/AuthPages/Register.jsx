@@ -63,12 +63,11 @@ export default function Register() {
         };
         setUser(newUser);
         Swal.fire("Register Successfully!");
-        navigate("/");
+        navigate("/dashboard");
         updateUserProfile({ displayName: name, photoURL: photoURL })
           .then((result) => {
             const newUser = result.user;
             setUser(newUser);
-            navigate("/");
           })
           .catch((error) => {
             const errorCode = error.code;

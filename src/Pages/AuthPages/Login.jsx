@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { IoChevronBackOutline, IoWarning } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import login from "../../assets/images/login.png";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -9,6 +9,8 @@ export default function Login() {
   const { loginUser, user, setUser } = useContext(AuthContext);
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location?.state?.from?.pathname || "/";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function Login() {
         const newUser = result.user;
         setUser(newUser);
         Swal.fire("Login Successfully!");
-        navigate("/dashboard");
+        navigate(redirect, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;

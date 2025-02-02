@@ -2,7 +2,6 @@ import { RiMenuUnfoldLine } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo4 from "../../assets/logo/logo4.png";
 export default function Dashboard() {
-  const isAdmin = true;
   const links = (
     <>
       <NavLink to="/dashboard/profile">
@@ -10,7 +9,7 @@ export default function Dashboard() {
           <a>Profile</a>
         </li>
       </NavLink>
-      <NavLink to="/dashboard">
+      <NavLink end to="/dashboard">
         <li>
           <a>Home</a>
         </li>

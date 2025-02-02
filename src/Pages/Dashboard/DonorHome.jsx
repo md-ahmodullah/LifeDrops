@@ -1,6 +1,6 @@
 import axios from "axios";
 import Lottie from "lottie-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
@@ -8,23 +8,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnLink from "../../Components/Reusable/BtnLink";
 import SmBtn from "../../Components/Reusable/SmBtn";
+import useDonationRequest from "../../Hooks/useDonationRequest";
 import { AuthContext } from "../../Provider/AuthProvider";
 import deep from "/public/deep.json";
+
 export default function DonorHome() {
-  const [myDonations, setMyDonations] = useState([]);
   const [showBtn, setShowBtn] = useState(true);
   const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    const userEmail = user?.email;
-    if (userEmail) {
-      axios
-        .get("https://life-drops-server-seven.vercel.app/donationRequest", {
-          params: { requesterEmail: userEmail },
-        })
-        .then((res) => setMyDonations(res.data));
-    }
-  }, [user]);
+  const [myDonations, refetch] = useDonationRequest();
 
   const handleDelete = (_id) => {
     Swal.fire({
@@ -55,12 +46,7 @@ export default function DonorHome() {
                 text: "Your request has been deleted.",
                 icon: "success",
               });
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: "You are not authorized to delete this assignment.",
-                icon: "error",
-              });
+              refetch();
             }
           });
       }
@@ -86,6 +72,7 @@ export default function DonorHome() {
           timer: 2000,
         });
         setShowBtn(false);
+        refetch();
       });
   };
   const handleCancel = (id) => {
@@ -107,6 +94,7 @@ export default function DonorHome() {
           timer: 2000,
         });
         setShowBtn(false);
+        refetch();
       });
   };
 

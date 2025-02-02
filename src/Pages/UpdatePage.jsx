@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { IoWarning } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router-dom";
+import { IoChevronBackOutline, IoWarning } from "react-icons/io5";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import createDonation from "../assets/images/create.png";
 import createDonation2 from "../assets/images/create2.png";
@@ -97,6 +97,13 @@ export default function UpdatePage() {
       <div className="bg-base-300 font-poppins">
         <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-0 pb-8">
           <div className="px-5 md:pr-5 lg:px-8 space-y-5 lg:col-span-2 order-2 lg:order-1">
+            <Link
+              to="/dashboard"
+              className="w-44 flex items-center gap-1 text-black pt-3"
+            >
+              <IoChevronBackOutline />
+              Back Dashboard
+            </Link>
             <div className="space-y-1 lg:pt-5">
               <h1 className="text-xl lg:text-2xl font-bold text-center">
                 Update Donation Request

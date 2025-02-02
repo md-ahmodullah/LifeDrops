@@ -1,19 +1,19 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { AuthContext } from "../Provider/AuthProvider";
-export default function useDonationRequest({ status = "" }) {
-  const [myDonations, setMyDonations] = useState([]);
+export default function useDonationRequest(status = "") {
   const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    const userEmail = user?.email;
-    if (userEmail) {
-      axios
-        .get("https://life-drops-server-seven.vercel.app/donationRequest", {
-          params: { requesterEmail: userEmail, status: status },
-        })
-        .then((res) => setMyDonations(res.data));
-    }
-  }, [user]);
-  return [myDonations];
+  const userEmail = user?.email;
+  const axiosSecure = useAxiosSecure();
+  const { data: myDonations = [], refetch } = useQuery({
+    queryKey: ["myDonations"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/donationRequest", {
+        params: { requesterEmail: userEmail, status: status },
+      });
+      return res.data;
+    },
+  });
+  return [myDonations, refetch];
 }
