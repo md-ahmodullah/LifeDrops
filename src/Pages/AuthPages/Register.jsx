@@ -4,17 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import login2 from "../../assets/images/login2.png";
 import register from "../../assets/images/register.png";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function Register() {
+  const [errMessage, setErrMessage] = useState("");
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
   const { user, setUser, createUser, updateUserProfile } =
     useContext(AuthContext);
-  const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,8 +64,6 @@ export default function Register() {
           password: password,
         };
         setUser(newUser);
-        Swal.fire("Register Successfully!");
-        navigate("/dashboard");
         updateUserProfile({ displayName: name, photoURL: photoURL })
           .then((result) => {
             const newUser = result.user;
@@ -82,17 +82,12 @@ export default function Register() {
         const displayError = errorMessage?.split(").")[0];
         setErrMessage(displayError);
       });
-    fetch("https://life-drops-server-seven.vercel.app/users", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userInfo),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("done");
-      });
+    axiosPublic.post("/users", userInfo).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire("Register Successfully!");
+        navigate("/dashboard");
+      }
+    });
   };
 
   return (

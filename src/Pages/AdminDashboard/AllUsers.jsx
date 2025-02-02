@@ -1,22 +1,9 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import logo4 from "../../assets/logo/logo4.png";
 import useAllUsers from "../../Hooks/useAllUsers";
-import { AuthContext } from "../../Provider/AuthProvider";
 export default function AllUsers() {
   const [status, setStatus] = useState("All");
-  const [fliterUsers, setFilterUsers] = useState([]);
-  const { user } = useContext(AuthContext);
-  const email = user?.email;
   const [users] = useAllUsers();
-
-  useEffect(() => {
-    axios
-      .get("https://life-drops-server-seven.vercel.app/users", {
-        params: { status: status },
-      })
-      .then((res) => setFilterUsers(res.data));
-  }, [status]);
 
   const handleStatusChange = (e) => {
     const selectedStatus = e.target.value;

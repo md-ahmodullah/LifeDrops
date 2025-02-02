@@ -5,12 +5,13 @@ import Register from "../Pages/AuthPages/Register";
 import Blogs from "../Pages/Blogs";
 import CreateDonation from "../Pages/Dashboard/CreateDonation";
 // import Dashboard from "../Pages/Dashboard/Dashboard";
+import Dashboard from "../Layout/Dashboard";
+import AdminHome from "../Pages/AdminDashboard/AdminHome";
 import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
 import AllUsers from "../Pages/AdminDashboard/AllUsers";
 import ContentManagement from "../Pages/AdminDashboard/ContentManagement";
 import BlogDetails from "../Pages/BlogDetails";
-import DashboardHome from "../Pages/Dashboard/DashboardHome";
-import DashboardLayout from "../Pages/Dashboard/DashBoardLayout";
+import DonorHome from "../Pages/Dashboard/DonorHome";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import Profile from "../Pages/Dashboard/Profile";
 import DetailsPage from "../Pages/DetailsPage";
@@ -73,7 +74,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <PrivateRoute>
-        <DashboardLayout />
+        <Dashboard />
       </PrivateRoute>
     ),
     children: [
@@ -81,7 +82,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <DashboardHome />
+            <DonorHome />
           </PrivateRoute>
         ),
       },
@@ -106,6 +107,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CreateDonation />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/adminHome",
+        element: (
+          <PrivateRoute>
+            <AdminHome />
           </PrivateRoute>
         ),
       },

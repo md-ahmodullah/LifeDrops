@@ -1,10 +1,10 @@
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
-import useAllDonationRequest from "../Hooks/useAllDonationRequest";
+import usePendingRequest from "../Hooks/usePendingRequest";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function DonationRequest() {
-  const [pendingDonation] = useAllDonationRequest();
+  const [pendingRequest] = usePendingRequest();
 
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -22,7 +22,7 @@ export default function DonationRequest() {
           </div>
           <div>
             <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-              All Pending Donation Requests({pendingDonation.length})
+              All Pending Donation Requests({pendingRequest.length})
             </h1>
             <p className="text-xs text-red-500 font-medium w-11/12">
               Every Drop Counts. Donate Blood, Save Lives
@@ -30,7 +30,7 @@ export default function DonationRequest() {
           </div>
         </div>
         <div className="w-11/12 mx-auto pb-12">
-          {pendingDonation.length !== 0 ? (
+          {pendingRequest.length !== 0 ? (
             <>
               <div className="overflow-x-auto pt-6">
                 <table className="table table-xs">
@@ -46,7 +46,7 @@ export default function DonationRequest() {
                     </tr>
                   </thead>
                   <tbody>
-                    {pendingDonation.map((pendig, i) => (
+                    {pendingRequest.map((pendig, i) => (
                       <tr key={pendig?._id}>
                         <th>{i + 1}</th>
                         <td>{pendig?.name}</td>
