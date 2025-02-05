@@ -13,36 +13,40 @@ export default function ContentManagement() {
   const [status, setStatus] = useState("All");
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/blogs?status=${status}`)
+      .get(`https://life-drops-server-seven.vercel.app/blogs?status=${status}`)
       .then((res) => setAllBlogs(res.data));
   }, [status]);
   const handlePublish = (id) => {
     const status = "published";
     const modified = { status };
-    axios.patch(`http://localhost:5000/blogs/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Blog is published now!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/blogs/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Blog is published now!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
   const handleUnpublish = (id) => {
     const status = "draft";
     const modified = { status };
-    axios.patch(`http://localhost:5000/blogs/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Blog is unpublished!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/blogs/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Blog is unpublished!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
   const handleDelete = (_id) => {
     Swal.fire({
@@ -55,7 +59,7 @@ export default function ContentManagement() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/blogs/${_id}`, {
+        fetch(`https://life-drops-server-seven.vercel.app/blogs/${_id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

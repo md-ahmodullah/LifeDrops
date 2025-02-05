@@ -14,58 +14,66 @@ export default function AllUsers() {
   const handleBlock = (id) => {
     const status = "block";
     const modified = { status };
-    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "User is blocked!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/users/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User is blocked!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
   const handleUnblock = (id) => {
     const status = "active";
     const modified = { status };
-    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "User is unblocked!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/users/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User is unblocked!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
   const handleVolunteer = (id) => {
     const role = "volunteer";
     const modified = { role };
-    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "User is Volunteer Now!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/users/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User is Volunteer Now!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
   const handleAdmin = (id) => {
     const role = "Admin";
     const modified = { role };
-    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "User is Admin Now!",
-        showConfirmButton: false,
-        timer: 2000,
+    axios
+      .patch(`https://life-drops-server-seven.vercel.app/users/${id}`, modified)
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User is Admin Now!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        refetch();
       });
-      refetch();
-    });
   };
 
   const handleStatusChange = (e) => {

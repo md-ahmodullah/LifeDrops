@@ -29,7 +29,7 @@ export default function AddBlog() {
     };
     console.log(blog);
 
-    fetch("http://localhost:5000/blogs", {
+    fetch("https://life-drops-server-seven.vercel.app/blogs", {
       method: "POST",
       headers: {
         "content-type": "application/json",

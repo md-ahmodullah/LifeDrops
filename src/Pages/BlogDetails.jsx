@@ -10,7 +10,7 @@ export default function BlogDetails() {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/blogs/${id}`)
+      .get(`https://life-drops-server-seven.vercel.app/blogs/${id}`)
       .then((res) => setBlog(res.data));
   }, []);
 
