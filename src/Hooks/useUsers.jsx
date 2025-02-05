@@ -15,12 +15,5 @@ export default function useUsers() {
       return res.data;
     },
   });
-  // useEffect(() => {
-  //   axios
-  //     .get("https://life-drops-server-seven.vercel.app/allusers", {
-  //       params: { email: email },
-  //     })
-  //     .then((res) => setUsers(res.data));
-  // }, []);
   return [users, refetch];
 }

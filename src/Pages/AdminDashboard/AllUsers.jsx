@@ -1,9 +1,74 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
 import useAllUsers from "../../Hooks/useAllUsers";
 export default function AllUsers() {
   const [status, setStatus] = useState("All");
-  const [users] = useAllUsers();
+  const [users, refetch] = useAllUsers();
+  const [filterUser, setFilterUser] = useState(users);
+  useEffect(() => {
+    axios
+      .get(`https://life-drops-server-seven.vercel.app/users?status=${status}`)
+      .then((res) => setFilterUser(res.data));
+  }, [status]);
+  const handleBlock = (id) => {
+    const status = "block";
+    const modified = { status };
+    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "User is blocked!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      refetch();
+    });
+  };
+  const handleUnblock = (id) => {
+    const status = "active";
+    const modified = { status };
+    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "User is unblocked!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      refetch();
+    });
+  };
+  const handleVolunteer = (id) => {
+    const role = "volunteer";
+    const modified = { role };
+    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "User is Volunteer Now!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      refetch();
+    });
+  };
+  const handleAdmin = (id) => {
+    const role = "Admin";
+    const modified = { role };
+    axios.patch(`http://localhost:5000/users/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "User is Admin Now!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      refetch();
+    });
+  };
 
   const handleStatusChange = (e) => {
     const selectedStatus = e.target.value;
@@ -21,7 +86,7 @@ export default function AllUsers() {
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  All Users({users.length})
+                  All Users({filterUser.length})
                 </h1>
               </div>
             </div>
@@ -51,7 +116,7 @@ export default function AllUsers() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((userr, i) => (
+                    {filterUser.map((userr, i) => (
                       <tr key={userr._id}>
                         <th className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
@@ -63,18 +128,52 @@ export default function AllUsers() {
                         </th>
                         <td>{userr.name}</td>
                         <td>{userr.email}</td>
-                        <td>{userr.role}</td>
+                        <td
+                          className={
+                            userr.role === "Admin"
+                              ? "text-red-600 font-semibold"
+                              : ""
+                          }
+                        >
+                          {userr.role}
+                        </td>
                         <td>{userr.status}</td>
-                        <td className="flex items-center gap-2 pb-4">
-                          <button className="btn btn-sm bg-red-600 border-none text-white hover:btn-ghost">
-                            Block
-                          </button>
-                          <button className="btn btn-sm bg-green-500 border-none text-white hover:btn-ghost">
-                            Volunteer
-                          </button>
-                          <button className="btn btn-sm bg-blue-600 border-none text-white hover:btn-ghost">
-                            Admin
-                          </button>
+                        <td>
+                          <div className="dropdown dropdown-hover">
+                            <BsThreeDotsVertical
+                              tabIndex={0}
+                              role="button"
+                              className="text-black text-xl"
+                            />
+                            <ul
+                              tabIndex={0}
+                              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+                            >
+                              {userr.status === "active" ? (
+                                <li>
+                                  <a onClick={() => handleBlock(userr._id)}>
+                                    Block
+                                  </a>
+                                </li>
+                              ) : (
+                                <li>
+                                  <a onClick={() => handleUnblock(userr._id)}>
+                                    Unblock
+                                  </a>
+                                </li>
+                              )}
+                              <li>
+                                <a onClick={() => handleVolunteer(userr._id)}>
+                                  Volunteer
+                                </a>
+                              </li>
+                              <li>
+                                <a onClick={() => handleAdmin(userr._id)}>
+                                  Admin
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
                         </td>
                       </tr>
                     ))}

@@ -1,19 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
-export default function useAllUsers() {
-  // const [users, setUsers] = useState([]);
+export default function useAllUsers(status = "") {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/users", {
+        params: { status: status },
+      });
       return res.data;
     },
   });
-  return [users];
+  return [users, refetch];
 }
-// useEffect(() => {
-//   axios
-//     .get("https://life-drops-server-seven.vercel.app/users")
-//     .then((res) => setUsers(res.data));
-// }, []);

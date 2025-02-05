@@ -58,8 +58,6 @@ export default function DonorHome() {
   const handleDone = (id) => {
     const status = "done";
     const modified = { status };
-    console.log(modified);
-    console.log(id);
     axios
       .patch(
         `https://life-drops-server-seven.vercel.app/donationRequest/${id}`,

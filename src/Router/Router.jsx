@@ -6,6 +6,7 @@ import Blogs from "../Pages/Blogs";
 import CreateDonation from "../Pages/Dashboard/CreateDonation";
 // import Dashboard from "../Pages/Dashboard/Dashboard";
 import Dashboard from "../Layout/Dashboard";
+import AddBlog from "../Pages/AddBlog";
 import AdminHome from "../Pages/AdminDashboard/AdminHome";
 import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
 import AllUsers from "../Pages/AdminDashboard/AllUsers";
@@ -139,6 +140,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ContentManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        element: (
+          <PrivateRoute>
+            <AddBlog />
           </PrivateRoute>
         ),
       },
