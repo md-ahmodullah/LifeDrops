@@ -8,12 +8,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
 import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
+import useUsers from "../../Hooks/useUsers";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function AllDonationRequest() {
   const [showBtn, setShowBtn] = useState(true);
   const [status, setStatus] = useState("All");
   const [allDonations] = useAllDonationRequest();
+  const [users] = useUsers();
   const [filterDonations, setFilterDonations] = useState(allDonations);
   useEffect(() => {
     axios
@@ -167,28 +169,32 @@ export default function AllDonationRequest() {
                           <td>{formatDate(myDonation.date)}</td>
                           <td>{myDonation.blood}</td>
                           <td>{myDonation.status}</td>
-                          <td className="flex items-center gap-2 pb-4">
-                            <Link to={`/details/${myDonation._id}`}>
-                              <FaEye
-                                className="text-base text-green-700"
-                                title="View"
-                              />
-                            </Link>
-                            <Link to={`/update/${myDonation._id}`}>
-                              <FaEdit
-                                className="text-base text-blue-600"
-                                title="Edit"
-                              />
-                            </Link>
-                            <button
-                              onClick={() => handleDelete(myDonation._id)}
-                            >
-                              <MdDelete
-                                className="text-base text-red-600"
-                                title="Delete"
-                              />
-                            </button>
-                          </td>
+                          {users?.role === "Admin" ? (
+                            <td className="flex items-center gap-2 pb-4">
+                              <Link to={`/details/${myDonation._id}`}>
+                                <FaEye
+                                  className="text-base text-green-700"
+                                  title="View"
+                                />
+                              </Link>
+                              <Link to={`/update/${myDonation._id}`}>
+                                <FaEdit
+                                  className="text-base text-blue-600"
+                                  title="Edit"
+                                />
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(myDonation._id)}
+                              >
+                                <MdDelete
+                                  className="text-base text-red-600"
+                                  title="Delete"
+                                />
+                              </button>
+                            </td>
+                          ) : (
+                            <td className="text-red-600">Not Allowed</td>
+                          )}
                         </tr>
                       ))}
                     </tbody>

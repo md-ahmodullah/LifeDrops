@@ -1,9 +1,13 @@
 import JoditEditor from "jodit-react";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 
-export default function JoditEditorContent({ placeholder }) {
+export default function JoditEditorContent({
+  placeholder,
+  content,
+  setContent,
+}) {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  // const [content, setContent] = useState("");
 
   const config = useMemo(
     () => ({
@@ -19,7 +23,7 @@ export default function JoditEditorContent({ placeholder }) {
       config={config}
       tabIndex={1} // tabIndex of textarea
       onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-      onChange={(newContent) => {}}
+      onChange={(newContent) => setContent(newContent)}
     />
   );
 }

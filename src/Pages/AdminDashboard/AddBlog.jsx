@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import JoditEditorContent from "../Components/JoditEditor";
-import useDistricts from "../Hooks/useDistricts";
-import useUpazila from "../Hooks/useUpazila";
-import useUsers from "../Hooks/useUsers";
-import { AuthContext } from "../Provider/AuthProvider";
+import JoditEditorContent from "../../Components/JoditEditor";
+import useDistricts from "../../Hooks/useDistricts";
+import useUpazila from "../../Hooks/useUpazila";
+import useUsers from "../../Hooks/useUsers";
+import { AuthContext } from "../../Provider/AuthProvider";
 export default function AddBlog() {
+  const [content, setContent] = useState("");
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
   const { user } = useContext(AuthContext);
@@ -18,7 +19,6 @@ export default function AddBlog() {
     const form = e.target;
     const title = form.title.value;
     const thumbnail = form.thumbnail.value;
-    const content = form.editor.value;
     const status = "draft";
 
     const blog = {
@@ -29,7 +29,7 @@ export default function AddBlog() {
     };
     console.log(blog);
 
-    fetch("/donat", {
+    fetch("http://localhost:5000/blogs", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -41,10 +41,12 @@ export default function AddBlog() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your request has been created!",
+          title: "Your blog has been created!",
           showConfirmButton: false,
           timer: 2000,
         });
+        form.reset();
+        setContent("");
       });
   };
   return (
@@ -87,7 +89,7 @@ export default function AddBlog() {
                   Content
                 </span>
               </label>
-              <JoditEditorContent />
+              <JoditEditorContent content={content} setContent={setContent} />
             </div>
             <button className="w-full btn bg-red-600 text-white font-bold hover:bg-blue-600">
               Create Blog

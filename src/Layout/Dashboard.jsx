@@ -7,7 +7,7 @@ import { TfiWrite } from "react-icons/tfi";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
 import useAllDonationRequest from "../Hooks/useAllDonationRequest";
-import useAllUsers from "../Hooks/useAllUsers";
+import useAllUsersOnly from "../Hooks/useAllUsersOnly";
 import useDonationRequest from "../Hooks/useDonationRequest";
 import usePendingRequest from "../Hooks/usePendingRequest";
 
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [myDonations] = useDonationRequest();
   const [AllDonationRequest] = useAllDonationRequest();
   const [pendingRequest] = usePendingRequest();
-  const [users] = useAllUsers();
+  const [allUsersOnly] = useAllUsersOnly();
   const isAdmin = true;
   const links = (
     <>
@@ -41,7 +41,7 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaUsers className="text-lg" />
-            <a>All Users({users.length})</a>
+            <a>All Users({allUsersOnly.length})</a>
           </NavLink>
           <NavLink
             to="/dashboard/all-blood-donation-request"

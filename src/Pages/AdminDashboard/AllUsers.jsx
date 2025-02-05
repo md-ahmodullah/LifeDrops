@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
-import useAllUsers from "../../Hooks/useAllUsers";
 export default function AllUsers() {
   const [status, setStatus] = useState("All");
-  const [users, refetch] = useAllUsers();
-  const [filterUser, setFilterUser] = useState(users);
+  const [filterUser, setFilterUser] = useState([]);
   useEffect(() => {
     axios
       .get(`https://life-drops-server-seven.vercel.app/users?status=${status}`)

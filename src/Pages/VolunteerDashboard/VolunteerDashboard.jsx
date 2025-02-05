@@ -1,73 +1,86 @@
-import { RiMenuUnfoldLine } from "react-icons/ri";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { BiSolidDonateBlood } from "react-icons/bi";
+import { FaUsers } from "react-icons/fa";
+import { RiFundsFill } from "react-icons/ri";
+import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
+import useAllUsers from "../../Hooks/useAllUsers";
+import { AuthContext } from "../../Provider/AuthProvider";
 import logo4 from "../../assets/logo/logo4.png";
-export default function VolunteerDashboard() {
-  const links = (
-    <>
-      <NavLink to="/dashboard/profile">
-        <li>
-          <a>Profile</a>
-        </li>
-      </NavLink>
-      <NavLink to="/dashboard">
-        <li>
-          <a>Home</a>
-        </li>
-      </NavLink>
-      <NavLink to="/dashboard/all-blood-donation-request">
-        <li>
-          <a>All Donation Request</a>
-        </li>
-      </NavLink>
-      <NavLink to="/dashboard/content-management">
-        <li>
-          <a>Content Management</a>
-        </li>
-      </NavLink>
-    </>
-  );
+export default function VolunteerHome() {
+  const [myDonations, setMyDonations] = useState([]);
+  const { user } = useContext(AuthContext);
+  const [users] = useAllUsers();
+  const [allDonations] = useAllDonationRequest();
+
+  useEffect(() => {
+    const userEmail = user?.email;
+    if (userEmail) {
+      axios
+        .get("https://life-drops-server-seven.vercel.app/donationRequest", {
+          params: { requesterEmail: userEmail },
+        })
+        .then((res) => setMyDonations(res.data));
+    }
+  }, [user]);
 
   return (
     <>
-      <section className="flex font-poppins">
-        <div className="lg:drawer-open">
-          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-
-          <div className="drawer-side z-10">
-            <label
-              htmlFor="my-drawer-2"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu bg-red-950 text-white min-h-full w-60 font-medium">
-              <div className="flex items-center gap-2 pt-2 pb-6 px-4">
-                <img src={logo4} alt="Blood Logo" className="w-6 h-8" />
-                <Link
-                  className="text-xl md:text-2xl font-bold text-red-500"
-                  to="/"
-                >
-                  <span className="text-blue-500">Life</span>Drops
-                </Link>
-              </div>
-              {links}
-            </ul>
-          </div>
-        </div>
-        <div className="w-full">
-          <section className="bg-red-800 h-[60px] flex items-center justify-between md:justify-start">
-            <div className="drawer-content p-5">
-              <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
-                <RiMenuUnfoldLine className="text-white text-2xl" />
-              </label>
+      <section className="w-11/12 mx-auto py-5 md:py-8 font-poppins">
+        <div className="">
+          <h1 className="text-xl md:text-3xl font-bold text-center text-red-700 uppercase">
+            Welcome, {user?.displayName}!
+          </h1>
+          <div className="flex items-center gap-2 pt-5 md:pt-8 px-2">
+            <div>
+              <img src={logo4} alt="Blood Logo" className="w-8 h-11" />
             </div>
-            <div className="px-3">
-              <p className="text-xl md:text-2xl font-bold text-gray-200">
+            <div>
+              <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
+                Site Overview
+              </h1>
+              <p className="text-xs text-red-500 font-medium w-11/12">
                 Volunteer Dashboard
               </p>
             </div>
-          </section>
-          <div className="w-full">
-            <Outlet></Outlet>
+          </div>
+        </div>
+        <div className="py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="stat bg-base-200 rounded m-4 shadow-md">
+              <div className="stat-figure text-primary">
+                <FaUsers className="text-5xl" />
+              </div>
+              <div className="stat-title">Total Donors</div>
+              <div className="stat-value text-blue-600">{users.length}</div>
+              <div className="stat-desc">
+                {users.length}% more than last month
+              </div>
+            </div>
+            <div className="stat bg-base-200 rounded m-4 shadow-md">
+              <div className="stat-figure text-red-600">
+                <BiSolidDonateBlood className="text-5xl" />
+              </div>
+              <div className="stat-title">Total Donation Requests</div>
+              <div className="stat-value text-red-600">
+                {allDonations.length}
+              </div>
+              <div className="stat-desc">
+                {allDonations.length}% more than last month
+              </div>
+            </div>
+            <div className="stat bg-base-200 rounded m-4 shadow-md">
+              <div className="stat-figure text-yellow-500">
+                <div className="avatar online">
+                  <div className="w-16 rounded-full">
+                    <RiFundsFill className="text-5xl" />
+                  </div>
+                </div>
+              </div>
+              <div className="stat-value">Funding</div>
+              <div className="stat-title">81% Done</div>
+              <div className="stat-desc text-secondary">Will Add Soon</div>
+            </div>
           </div>
         </div>
       </section>

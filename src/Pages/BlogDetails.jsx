@@ -1,16 +1,25 @@
+import axios from "axios";
+import DOMPurify from "dompurify";
+import { useEffect, useState } from "react";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { IoShareSocialSharp } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function BlogDetails() {
+  const [blog, setBlog] = useState({});
+  const { id } = useParams();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/blogs/${id}`)
+      .then((res) => setBlog(res.data));
+  }, []);
+
   return (
     <>
       <CustomHelmet title={"LifeDrops | Blog Details"} />
       <section className="w-3/5 mx-auto py-3">
         <div className="px-4">
-          <h1 className="text-3xl font-bold">
-            A Drop of Blood Can Create an Ocean of Hope that can Make a Family
-            Happy
-          </h1>
+          <h1 className="text-3xl font-bold">{blog?.title}</h1>
           <div className="flex items-center justify-between py-4 text-gray-400">
             <div className="flex gap-3 items-center">
               <img
@@ -31,12 +40,13 @@ export default function BlogDetails() {
           </div>
           <div>
             <img
-              src="https://i.ibb.co.com/BVFjL9vy/slider1.jpg"
+              src={blog?.thumbnail}
               alt=""
               className="w-full h-[400px] object-cover"
             />
           </div>
-          <p className="py-4 text-gray-600 text-justify">
+
+          {/* <p className="py-4 text-gray-600 text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
             placeat, magni reprehenderit, natus in accusamus deleniti fuga
             recusandae quo, aliquam saepe asperiores vero magnam perferendis
@@ -70,7 +80,13 @@ export default function BlogDetails() {
             sunt rerum iste? Magnam, reiciendis quae! Ex cum, aspernatur quaerat
             placeat eum officiis doloribus minima, enim nulla, tempora expedita
             autem amet dolore laboriosam reiciendis dolor?
-          </p>
+          </p> */}
+          <div
+            className="flex flex-col items-center gap-5 py-2"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(blog?.content || ""),
+            }}
+          />
           <div className="flex items-center gap-1 pt-6">
             <p className="text-red-800 px-2 rounded-full font-normal">#blood</p>
             <p className="text-red-800 px-2 rounded-full font-normal">

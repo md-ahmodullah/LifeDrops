@@ -1,9 +1,9 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
-import slider1 from "../assets/images/sliderImage/slider1.jpg";
+import useBlogs from "../Hooks/useBlogs";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Blogs() {
-  const id = "b10a12gmsa36pscic70";
+  const [blogs] = useBlogs();
   return (
     <>
       <CustomHelmet title={"LifeDrops | Blogs"} />
@@ -39,161 +39,89 @@ export default function Blogs() {
           </div>
           <h2 className="text-lg font-bold">Recent Blogs Posts</h2>
           <div className="py-3 grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
-            <div className="flex flex-col justify-center gap-1 px-2">
-              <img src={slider1} alt="" className="rounded" />
-              <div className="flex items-center gap-1 text-sm font-medium text-gray-500  pt-4">
-                <p>Mr Author |</p>
-                <p>20 January 2025</p>
-              </div>
-              <h1 className="text-lg font-semibold">
-                Donating Blood is the way to serve humanity.
-              </h1>
-              <p className="text-sm text-gray-500">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo,
-                amet ratione omnis suscipit aspernatur dolore eos corporis magni
-                vero nihil ducimus blanditiis ipsa laborum rem! Qui beatae
-                minima error voluptate.
-              </p>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
-                  <p className="px-2 border border-red-700 rounded-full">
-                    blood
-                  </p>
-                  <p className="px-2 border border-red-700 rounded-full">
-                    donation
-                  </p>
-                  <p className="px-2 border border-red-700 rounded-full">
-                    campaign
-                  </p>
+            {blogs.slice(0, 1).map((blog) => (
+              <div
+                key={blog._id}
+                className="flex flex-col justify-center gap-1 px-2"
+              >
+                <img src={blog.thumbnail} alt="" className="rounded" />
+                <div className="flex items-center gap-1 text-sm font-medium text-gray-500  pt-4">
+                  <p>Admin |</p>
+                  <p>20 January 2025</p>
                 </div>
-                <div className="text-sm text-red-700 pr-8">
-                  <Link to={`/blogs/${id}`} className="flex items-center gap-1">
-                    <GoArrowUpRight /> View Details
-                  </Link>
+                <h1 className="text-lg font-semibold">{blog?.title}</h1>
+                <p className="text-sm text-gray-500">
+                  Need blood for yourself or a loved one? Our platform connects
+                  you with available donors and blood drives in your area.
+                  Register as a recipient and receive the support you need
+                  quickly and efficiently.
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
+                    <p className="px-2 border border-red-700 rounded-full">
+                      blood
+                    </p>
+                    <p className="px-2 border border-red-700 rounded-full">
+                      donation
+                    </p>
+                    <p className="px-2 border border-red-700 rounded-full">
+                      campaign
+                    </p>
+                  </div>
+                  <div className="text-sm text-red-700 pr-8">
+                    <Link
+                      to={`/blogs/${blog._id}`}
+                      className="flex items-center gap-1"
+                    >
+                      <GoArrowUpRight /> View Details
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
             <div className="flex flex-col items-center gap-3">
-              <div className="flex item-center gap-2">
-                <div>
-                  <img src={slider1} alt="" className="rounded" />
-                </div>
-                <div className="px-2">
-                  <div className="flex items-center gap-1 text-sm font-medium text-gray-500">
-                    <p>Mr Author |</p>
-                    <p>20 January 2025</p>
+              {blogs.slice(1).map((blog) => (
+                <div
+                  key={blog._id}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-2"
+                >
+                  <div>
+                    <img src={blog.thumbnail} alt="" className=" rounded" />
                   </div>
-                  <h1 className="text-lg font-semibold">
-                    Donating Blood is the way to serve humanity.
-                  </h1>
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Quo, amet ratione omnis suscipit aspernatur dolore eos
-                    corporis.
-                  </p>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
-                      <p className="px-2 border border-red-700 rounded-full">
-                        blood
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        donation
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        campaign
-                      </p>
+                  <div className="px-2">
+                    <div className="flex items-center gap-1 text-sm font-medium text-gray-500">
+                      <p>Admin |</p>
+                      <p>20 January 2025</p>
                     </div>
-                    <div className="text-sm text-red-700">
-                      <Link
-                        to="/blogs/b5jkskjadhas"
-                        className="flex items-center gap-1"
-                      >
-                        <GoArrowUpRight /> View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex item-center gap-2">
-                <div>
-                  <img src={slider1} alt="" className="rounded" />
-                </div>
-                <div className="px-2">
-                  <div className="flex items-center gap-1 text-sm font-medium text-gray-500">
-                    <p>Mr Author |</p>
-                    <p>20 January 2025</p>
-                  </div>
-                  <h1 className="text-lg font-semibold">
-                    Donating Blood is the way to serve humanity.
-                  </h1>
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Quo, amet ratione omnis suscipit aspernatur dolore eos
-                    corporis.
-                  </p>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
-                      <p className="px-2 border border-red-700 rounded-full">
-                        blood
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        donation
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        campaign
-                      </p>
-                    </div>
-                    <div className="text-sm text-red-700">
-                      <Link
-                        to="/blogs/b5jkskjadhas"
-                        className="flex items-center gap-1"
-                      >
-                        <GoArrowUpRight /> View Details
-                      </Link>
+                    <h1 className="text-base font-semibold">{blog?.title}</h1>
+                    <p className="text-sm text-gray-500">
+                      Our platform connects you with available donors and blood
+                      drives in your area.
+                    </p>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
+                        <p className="px-2 border border-red-700 rounded-full">
+                          blood
+                        </p>
+                        <p className="px-2 border border-red-700 rounded-full">
+                          donation
+                        </p>
+                        <p className="px-2 border border-red-700 rounded-full">
+                          campaign
+                        </p>
+                      </div>
+                      <div className="text-sm text-red-700">
+                        <Link
+                          to={`/blogs/${blog._id}`}
+                          className="flex items-center gap-1"
+                        >
+                          <GoArrowUpRight /> View Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex item-center gap-2">
-                <div>
-                  <img src={slider1} alt="" className="rounded" />
-                </div>
-                <div className="px-2">
-                  <div className="flex items-center gap-1 text-sm font-medium text-gray-500">
-                    <p>Mr Author |</p>
-                    <p>20 January 2025</p>
-                  </div>
-                  <h1 className="text-lg font-semibold">
-                    Donating Blood is the way to serve humanity.
-                  </h1>
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Quo, amet ratione omnis suscipit aspernatur dolore eos
-                    corporis.
-                  </p>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5 text-xs text-red-700 py-4">
-                      <p className="px-2 border border-red-700 rounded-full">
-                        blood
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        donation
-                      </p>
-                      <p className="px-2 border border-red-700 rounded-full">
-                        campaign
-                      </p>
-                    </div>
-                    <div className="text-sm text-red-700">
-                      <Link
-                        to="/blogs/b5jkskjadhas"
-                        className="flex items-center gap-1"
-                      >
-                        <GoArrowUpRight /> View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
