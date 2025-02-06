@@ -6,6 +6,7 @@ import { RiMenuUnfoldLine } from "react-icons/ri";
 import { TfiWrite } from "react-icons/tfi";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import useAdmin from "../Hooks/useAdmin";
 import useAllDonationRequest from "../Hooks/useAllDonationRequest";
 import useAllUsersOnly from "../Hooks/useAllUsersOnly";
 import useDonationRequest from "../Hooks/useDonationRequest";
@@ -16,7 +17,7 @@ export default function Dashboard() {
   const [AllDonationRequest] = useAllDonationRequest();
   const [pendingRequest] = usePendingRequest();
   const [allUsersOnly] = useAllUsersOnly();
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   const links = (
     <>
       {isAdmin ? (

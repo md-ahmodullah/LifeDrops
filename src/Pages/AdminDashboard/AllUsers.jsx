@@ -1,16 +1,27 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 export default function AllUsers() {
   const [status, setStatus] = useState("All");
-  const [filterUser, setFilterUser] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://life-drops-server-seven.vercel.app/users?status=${status}`)
-      .then((res) => setFilterUser(res.data));
-  }, [status]);
+  const axiosSecure = useAxiosSecure();
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/all-users", {
+        params: { status: status },
+      });
+      return res.data;
+    },
+  });
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://life-drops-server-seven.vercel.app/users?status=${status}`)
+  //     .then((res) => setFilterUser(res.data));
+  // }, [status]);
   const handleBlock = (id) => {
     const status = "block";
     const modified = { status };
@@ -92,7 +103,7 @@ export default function AllUsers() {
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  All Users({filterUser.length})
+                  All Users({users.length})
                 </h1>
               </div>
             </div>
@@ -122,7 +133,7 @@ export default function AllUsers() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filterUser.map((userr, i) => (
+                    {users.map((userr, i) => (
                       <tr key={userr._id}>
                         <th className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
