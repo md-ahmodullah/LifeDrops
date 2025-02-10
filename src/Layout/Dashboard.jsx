@@ -27,7 +27,7 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaUser className="text-base" />
-            <a>Profile</a>
+            Profile
           </NavLink>
           <NavLink
             end
@@ -35,28 +35,28 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaHome className="text-lg" />
-            <a>Admin Home</a>
+            Admin Home
           </NavLink>
           <NavLink
             to="/dashboard/all-users"
             className="flex gap-2 items-center text-gray-100"
           >
             <FaUsers className="text-lg" />
-            <a>All Users({allUsersOnly.length})</a>
+            All Users({allUsersOnly.length})
           </NavLink>
           <NavLink
             to="/dashboard/all-blood-donation-request"
             className="flex gap-2 items-center text-gray-100"
           >
             <FaList className="text-base" />
-            <a>All Donation Requests({AllDonationRequest.length})</a>
+            All Donation Requests({AllDonationRequest.length})
           </NavLink>
           <NavLink
             to="/dashboard/content-management"
             className="flex gap-2 items-center text-gray-100"
           >
             <BiSolidBookContent className="text-base" />
-            <a>Content Management</a>
+            Content Management
           </NavLink>
         </>
       ) : (
@@ -66,7 +66,7 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaUser className="text-base" />
-            <a>Profile</a>
+            Profile
           </NavLink>
           <NavLink
             end
@@ -74,39 +74,39 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaHome className="text-lg" />
-            <a>User Home</a>
+            User Home
           </NavLink>
           <NavLink
             to="/dashboard/my-donation-requests"
             className="flex gap-2 items-center text-gray-100"
           >
             <FaList className="text-sm" />
-            <a>My Donation Requests({myDonations.length})</a>
+            My Donation Requests({myDonations.length})
           </NavLink>
           <NavLink
             to="/dashboard/create-donation-request"
             className="flex gap-2 items-center text-gray-100"
           >
             <FaFileWaveform className="text-lg" />
-            <a>Create Donation Request</a>
+            Create Donation Request
           </NavLink>
         </>
       )}
       <div className="divider border-t border-gray-600"></div>
       <NavLink to="/" className="flex gap-2 items-center text-gray-100">
         <FaHome className="text-lg" />
-        <a>Home</a>
+        Home
       </NavLink>
       <NavLink
         to="/donationRequests"
         className="flex gap-2 items-center text-gray-100"
       >
         <MdOutlinePendingActions className="text-xl" />
-        <a>Pending Request({pendingRequest.length})</a>
+        Pending Request({pendingRequest.length})
       </NavLink>
       <NavLink to="/blogs" className="flex gap-2 items-center text-gray-100">
         <TfiWrite className="text-lg" />
-        <a>Published Blogs</a>
+        Published Blogs
       </NavLink>
     </>
   );

@@ -8,8 +8,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 export default function AllUsers() {
   const [status, setStatus] = useState("All");
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
+  const { data: allUsers = [], refetch } = useQuery({
+    queryKey: ["allUsers", status],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-users", {
         params: { status: status },
@@ -91,7 +91,6 @@ export default function AllUsers() {
     const selectedStatus = e.target.value;
     setStatus(selectedStatus);
   };
-
   return (
     <>
       <section className="font-poppins w-11/12 mx-auto">
@@ -103,7 +102,7 @@ export default function AllUsers() {
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  All Users({users.length})
+                  All Users({allUsers.length})
                 </h1>
               </div>
             </div>
@@ -133,7 +132,7 @@ export default function AllUsers() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((userr, i) => (
+                    {allUsers.map((userr, i) => (
                       <tr key={userr._id}>
                         <th className="avatar">
                           <div className="mask mask-squircle h-12 w-12">

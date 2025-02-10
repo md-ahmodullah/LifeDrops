@@ -167,7 +167,7 @@ export default function Profile() {
                         District
                       </span>
                     </label>
-                    {users?.district && (
+                    {users?.district && upazilas.length > 0 && (
                       <select
                         name="district"
                         className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"
@@ -190,7 +190,7 @@ export default function Profile() {
                         Upazila
                       </span>
                     </label>
-                    {users.upazila && (
+                    {users.upazila && upazilas.length > 0 && (
                       <select
                         name="upazila"
                         className="px-4 py-2 w-full outline-none border-none rounded bg-gray-200"

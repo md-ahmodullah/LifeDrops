@@ -1,21 +1,27 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDelete, MdLibraryAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import content from "../../assets/images/content-management.png";
-import useBlogs from "../../Hooks/useBlogs";
 import useUsers from "../../Hooks/useUsers";
 export default function ContentManagement() {
-  const [users] = useUsers();
-  const [blogs, refetch] = useBlogs();
-  const [allBlogs, setAllBlogs] = useState(blogs);
   const [status, setStatus] = useState("All");
-  useEffect(() => {
-    axios
-      .get(`https://life-drops-server-seven.vercel.app/blogs?status=${status}`)
-      .then((res) => setAllBlogs(res.data));
-  }, [status]);
+  const [users] = useUsers();
+
+  const { data: blogs = [], refetch } = useQuery({
+    queryKey: ["blogs", status],
+    queryFn: async () => {
+      const res = await axios.get(
+        "https://life-drops-server-seven.vercel.app/blogs",
+        {
+          params: { status: status },
+        }
+      );
+      return res.data;
+    },
+  });
   const handlePublish = (id) => {
     const status = "published";
     const modified = { status };
@@ -113,9 +119,7 @@ export default function ContentManagement() {
           </div>
         </div>
         <div className="flex items-center justify-between pt-10 ">
-          <h1 className="text-2xl font-bold px-3">
-            All Blogs({allBlogs.length})
-          </h1>
+          <h1 className="text-2xl font-bold px-3">All Blogs({blogs.length})</h1>
           <form className="pr-8">
             <select
               className="select select-bordered w-full max-w-xs"
@@ -139,7 +143,7 @@ export default function ContentManagement() {
               </tr>
             </thead>
             <tbody>
-              {allBlogs.map((blog) => (
+              {blogs.map((blog) => (
                 <tr key={blog._id}>
                   <td>
                     <div className="flex items-center gap-3">

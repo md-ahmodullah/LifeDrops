@@ -6,21 +6,9 @@ import logo4 from "../assets/logo/logo4.png";
 export default function Navbar() {
   const links = (
     <>
-      <NavLink to="">
-        <li>
-          <a>Home</a>
-        </li>
-      </NavLink>
-      <NavLink to="/donationRequests">
-        <li>
-          <a>Donation Requests</a>
-        </li>
-      </NavLink>
-      <NavLink to="/blogs">
-        <li>
-          <a>Blogs</a>
-        </li>
-      </NavLink>
+      <NavLink to="">Home</NavLink>
+      <NavLink to="/donationRequests">Donation Requests</NavLink>
+      <NavLink to="/blogs">Blogs</NavLink>
     </>
   );
 
@@ -51,7 +39,7 @@ export default function Navbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold"
+              className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold gap-2"
             >
               {links}
             </ul>
@@ -67,8 +55,10 @@ export default function Navbar() {
           <ul className="menu menu-horizontal px-1 font-semibold">{links}</ul>
         </div> */}
         <div className="navbar-end">
-          <div className="hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 font-semibold">{links}</ul>
+          <div className="hidden lg:flex mr-6">
+            <ul className="menu menu-horizontal px-1 font-semibold gap-6">
+              {links}
+            </ul>
           </div>
           {user ? (
             <>
@@ -90,11 +80,7 @@ export default function Navbar() {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content bg-base-100 backdrop-blur-md bg-opacity-65 rounded-box z-[1] mt-3 p-2 shadow font-semibold"
                 >
-                  <NavLink to="/dashboard">
-                    <li>
-                      <a>Dashboard</a>
-                    </li>
-                  </NavLink>
+                  <NavLink to="/dashboard">Dashboard</NavLink>
                   <li>
                     <button onClick={handleLogOut} className="text-red-600">
                       Log Out
