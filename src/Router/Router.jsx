@@ -12,6 +12,7 @@ import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
 import AllUsers from "../Pages/AdminDashboard/AllUsers";
 import ContentManagement from "../Pages/AdminDashboard/ContentManagement";
 import BlogDetails from "../Pages/BlogDetails";
+import DashboardLayout from "../Pages/Dashboard/DashBoardLayout";
 import DonorHome from "../Pages/Dashboard/DonorHome";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import Profile from "../Pages/Dashboard/Profile";
@@ -83,7 +84,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <DonorHome />
+            <DashboardLayout />
           </PrivateRoute>
         ),
       },
@@ -92,6 +93,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/userHome",
+        element: (
+          <PrivateRoute>
+            <DonorHome />
           </PrivateRoute>
         ),
       },

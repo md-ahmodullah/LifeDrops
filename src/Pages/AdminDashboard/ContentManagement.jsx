@@ -5,10 +5,12 @@ import { MdDelete, MdLibraryAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import content from "../../assets/images/content-management.png";
+import useAdmin from "../../Hooks/useAdmin";
 import useUsers from "../../Hooks/useUsers";
 export default function ContentManagement() {
   const [status, setStatus] = useState("All");
   const [users] = useUsers();
+  const [isAdmin] = useAdmin();
 
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs", status],
@@ -111,7 +113,11 @@ export default function ContentManagement() {
           <div className="mr-4 border border-gray-300 px-2 md:px-4 py-3 rounded shadow bg-base-200">
             <Link
               to="/dashboard/content-management/add-blog"
-              className="flex items-center gap-1.5 text-base md:text-xl font-bold"
+              className={`${
+                isAdmin
+                  ? "flex items-center gap-1.5 text-base md:text-xl font-bold"
+                  : "pointer-events-none flex items-center gap-1.5 text-gray-400 md:text-xl font-bold"
+              } `}
             >
               <MdLibraryAdd />
               Add Blog

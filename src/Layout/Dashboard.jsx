@@ -11,6 +11,7 @@ import useAllDonationRequest from "../Hooks/useAllDonationRequest";
 import useAllUsersOnly from "../Hooks/useAllUsersOnly";
 import useDonationRequest from "../Hooks/useDonationRequest";
 import usePendingRequest from "../Hooks/usePendingRequest";
+import useVolunteer from "../Hooks/useVolunteer";
 
 export default function Dashboard() {
   const [myDonations] = useDonationRequest();
@@ -18,9 +19,10 @@ export default function Dashboard() {
   const [pendingRequest] = usePendingRequest();
   const [allUsersOnly] = useAllUsersOnly();
   const [isAdmin] = useAdmin();
+  const [isVolunteer] = useVolunteer();
   const links = (
     <>
-      {isAdmin ? (
+      {isAdmin || isVolunteer ? (
         <>
           <NavLink
             to="/dashboard/profile"
@@ -35,15 +37,17 @@ export default function Dashboard() {
             className="flex gap-2 items-center text-gray-100"
           >
             <FaHome className="text-lg" />
-            Admin Home
+            {isAdmin ? "Admin" : "Volunteer"} Home
           </NavLink>
-          <NavLink
-            to="/dashboard/all-users"
-            className="flex gap-2 items-center text-gray-100"
-          >
-            <FaUsers className="text-lg" />
-            All Users({allUsersOnly.length})
-          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/dashboard/all-users"
+              className="flex gap-2 items-center text-gray-100"
+            >
+              <FaUsers className="text-lg" />
+              All Users({allUsersOnly.length})
+            </NavLink>
+          )}
           <NavLink
             to="/dashboard/all-blood-donation-request"
             className="flex gap-2 items-center text-gray-100"

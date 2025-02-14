@@ -6,6 +6,8 @@ import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
 import CustomHelmet from "../../ReusableComponents/Helmet";
+const image_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 export default function Profile() {
   const [logginUser, setLogginUser] = useState(null);
   const [districts] = useDistricts();
@@ -22,28 +24,42 @@ export default function Profile() {
     setIsEditable(false);
     const form = e.target;
     const name = form.name.value;
-    const photoURL = form.photoURL.value;
     const email = form.email.value;
     const blood = form.blood.value;
     const district = form.district.value;
     const upazila = form.upazila.value;
-    const updateUserInfo = { name, photoURL, blood, district, upazila };
-    fetch(`https://life-drops-server-seven.vercel.app/users/${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateUserInfo),
+    const photoFile = form.photo.files[0];
+    const formData = new FormData();
+    formData.append("image", photoFile);
+    if (!photoFile) {
+      setErrMessage("Please upload a photo.");
+      return;
+    }
+    fetch(image_hosting_api, {
+      method: "POST",
+      body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your profile has been updated!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        const photoURL = data.data.display_url;
+        const updateUserInfo = { name, photoURL, blood, district, upazila };
+        fetch(`https://life-drops-server-seven.vercel.app/users/${id}`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(updateUserInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your profile has been updated!",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          });
       });
   };
   return (
@@ -127,12 +143,18 @@ export default function Profile() {
                         Photo URL
                       </span>
                     </label>
-                    <input
+                    {/* <input
                       type="text"
                       name="photoURL"
                       placeholder="Photo URL"
                       defaultValue={users?.photoURL}
                       className="w-full outline-none rounded border px-4 py-2 bg-gray-200 border-none text-black placeholder:text-gray-500 focus:border-red-200"
+                      required
+                    /> */}
+                    <input
+                      name="photo"
+                      type="file"
+                      className="file-input file-input-bordered w-full bg-white"
                       required
                     />
                   </div>
@@ -183,7 +205,6 @@ export default function Profile() {
                       </select>
                     )}
                   </div>
-
                   <div>
                     <label className="label">
                       <span className="label-text text-white font-semibold">

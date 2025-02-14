@@ -3,15 +3,17 @@ import { useContext, useEffect, useState } from "react";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
 import { RiFundsFill } from "react-icons/ri";
+import logo4 from "../../assets/logo/logo4.png";
+import useAdmin from "../../Hooks/useAdmin";
 import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
 import useAllUsers from "../../Hooks/useAllUsers";
 import { AuthContext } from "../../Provider/AuthProvider";
-import logo4 from "../../assets/logo/logo4.png";
 export default function AdminHome() {
   const [myDonations, setMyDonations] = useState([]);
   const { user } = useContext(AuthContext);
   const [users] = useAllUsers();
   const [allDonations] = useAllDonationRequest();
+  const [isAdmin] = useAdmin();
 
   useEffect(() => {
     const userEmail = user?.email;
@@ -40,7 +42,7 @@ export default function AdminHome() {
                 Site Overview
               </h1>
               <p className="text-xs text-red-500 font-medium w-11/12">
-                Administration Panel
+                {isAdmin ? "Administration" : "Volunteer"} Panel
               </p>
             </div>
           </div>
