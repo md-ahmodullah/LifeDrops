@@ -9,6 +9,10 @@ import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
+
+const image_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
 export default function Register() {
   const [errMessage, setErrMessage] = useState("");
   const [districts] = useDistricts();
@@ -22,7 +26,6 @@ export default function Register() {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const photoURL = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
     const confirmpass = form.confirmpass.value;
@@ -31,18 +34,13 @@ export default function Register() {
     const upazila = form.upazila.value;
     const role = "donor";
     const status = "active";
-
-    const userInfo = {
-      name,
-      photoURL,
-      email,
-      blood,
-      district,
-      upazila,
-      role,
-      status,
-    };
-
+    const photoFile = form.photo.files[0];
+    const formData = new FormData();
+    formData.append("image", photoFile);
+    if (!photoFile) {
+      setErrMessage("Please upload a photo.");
+      return;
+    }
     const validation = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
     if (!validation.test(password)) {
       setErrMessage("Must be at least 6 char including upper & lower case");
@@ -54,40 +52,68 @@ export default function Register() {
       return;
     }
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        const newUser = {
-          displayName: name,
-          photoURL: photoURL,
-          email: email,
-          password: password,
-        };
-        setUser(newUser);
-        updateUserProfile({ displayName: name, photoURL: photoURL })
-          .then((result) => {
-            const newUser = result.user;
-            setUser(newUser);
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message?.split("auth/")[1];
-            const displayError = errorMessage?.split(").")[0];
-            setErrMessage(displayError);
+    fetch(image_hosting_api, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          const photoURL = data.data.display_url;
+          const userInfo = {
+            name,
+            photoURL,
+            email,
+            blood,
+            district,
+            upazila,
+            role,
+            status,
+          };
+
+          createUser(email, password)
+            .then((result) => {
+              const user = result.user;
+              const newUser = {
+                displayName: name,
+                photoURL: photoURL,
+                email: email,
+                password: password,
+              };
+              setUser(newUser);
+              updateUserProfile({ displayName: name, photoURL: photoURL })
+                .then((result) => {
+                  const newUser = result.user;
+                  setUser(newUser);
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message?.split("auth/")[1];
+                  const displayError = errorMessage?.split(").")[0];
+                  setErrMessage(displayError);
+                });
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message?.split("auth/")[1];
+              const displayError = errorMessage?.split(").")[0];
+              setErrMessage(displayError);
+            });
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire("Register Successfully!");
+              navigate("/");
+            }
           });
+        }
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message?.split("auth/")[1];
-        const displayError = errorMessage?.split(").")[0];
-        setErrMessage(displayError);
-      });
-    axiosPublic.post("/users", userInfo).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire("Register Successfully!");
-        navigate("/dashboard");
-      }
-    });
+      .catch((err) => console.error("Image Upload Error:", err));
+
+    // const res = await axiosPublic.post(image_hosting_api, imageFile, {
+    //   headers: {
+    //     "content-type": "multipart/form-data",
+    //   },
+    // });
   };
 
   return (
@@ -165,11 +191,17 @@ export default function Register() {
                       Photo URL
                     </span>
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     name="photo"
                     placeholder="Photo URL"
                     className="w-full outline-none rounded-sm border px-4 py-2 bg-white border-none text-black placeholder:text-gray-500 focus:border-red-200"
+                    required
+                  /> */}
+                  <input
+                    name="photo"
+                    type="file"
+                    className="file-input file-input-bordered w-full bg-white"
                     required
                   />
                 </div>
