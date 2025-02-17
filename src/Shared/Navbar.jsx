@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 import logo4 from "../assets/logo/logo4.png";
+import useUsers from "../Hooks/useUsers";
 export default function Navbar() {
   const links = (
     <>
@@ -13,6 +14,7 @@ export default function Navbar() {
   );
 
   const { user, logOut } = useContext(AuthContext);
+  const [users] = useUsers();
   const handleLogOut = () => {
     logOut();
   };
@@ -71,7 +73,7 @@ export default function Navbar() {
                   <div className="w-10 rounded-full">
                     <img
                       alt="profile"
-                      src={user?.photoURL}
+                      src={users?.photoURL}
                       title={user?.displayName}
                     />
                   </div>

@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import content from "../../assets/images/content-management.png";
 import useAdmin from "../../Hooks/useAdmin";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useUsers from "../../Hooks/useUsers";
 export default function ContentManagement() {
   const [status, setStatus] = useState("All");
   const [users] = useUsers();
   const [isAdmin] = useAdmin();
+  const axiosSecure = useAxiosSecure();
 
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs", status],
@@ -27,34 +29,30 @@ export default function ContentManagement() {
   const handlePublish = (id) => {
     const status = "published";
     const modified = { status };
-    axios
-      .patch(`https://life-drops-server-seven.vercel.app/blogs/${id}`, modified)
-      .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Blog is published now!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        refetch();
+    axiosSecure.patch(`/blogs/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Blog is published now!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      refetch();
+    });
   };
   const handleUnpublish = (id) => {
     const status = "draft";
     const modified = { status };
-    axios
-      .patch(`https://life-drops-server-seven.vercel.app/blogs/${id}`, modified)
-      .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Blog is unpublished!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        refetch();
+    axiosSecure.patch(`/blogs/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Blog is unpublished!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      refetch();
+    });
   };
   const handleDelete = (_id) => {
     Swal.fire({
@@ -67,24 +65,16 @@ export default function ContentManagement() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://life-drops-server-seven.vercel.app/blogs/${_id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your blog has been deleted.",
-                icon: "success",
-              });
-              refetch();
-            }
-          });
+        axiosSecure.delete(`/blogs/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your blog has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
       }
     });
   };

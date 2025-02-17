@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import avatar from "../assets/images/avatar.png";
 import searchImg from "../assets/images/login2.png";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
 import CustomHelmet from "../ReusableComponents/Helmet";
@@ -11,6 +11,7 @@ export default function Search() {
   const [matched, setMatched] = useState([]);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
+  const axiosSecure = useAxiosSecure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +26,8 @@ export default function Search() {
       upazila,
     };
     try {
-      const result = await axios
-        .get("https://life-drops-server-seven.vercel.app/users", {
+      const result = await axiosSecure
+        .get("/users", {
           params: { blood: blood, district: district, upazila: upazila },
         })
         .then((res) => setMatched(res.data));
@@ -34,7 +35,6 @@ export default function Search() {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(matched);
   return (
     <>
       <CustomHelmet title={"LifeDrops | Search"} />

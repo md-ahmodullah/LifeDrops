@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { IoChevronBackOutline, IoWarning } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import createDonation from "../assets/images/create.png";
 import createDonation2 from "../assets/images/create2.png";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useDistricts from "../Hooks/useDistricts";
 import useUpazila from "../Hooks/useUpazila";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -14,6 +14,7 @@ export default function UpdatePage() {
   const [errMessage, setErrMessage] = useState("");
   const [date, setDate] = useState(updateRequest.date || "");
   const [time, setTime] = useState(updateRequest.time || "");
+  +6 + 66;
   useEffect(() => {
     if (updateRequest) {
       const formattedDate = updateRequest.date
@@ -39,9 +40,10 @@ export default function UpdatePage() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    axios
-      .get(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`)
+    axiosSecure
+      .get(`/donationRequest/${id}`)
       .then((res) => setUpdateRequest(res.data));
   }, []);
 
@@ -71,24 +73,16 @@ export default function UpdatePage() {
       message,
     };
 
-    fetch(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedRequest),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your request has been updated!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate("/dashboard");
+    axiosSecure.put(`/donationRequest/${id}`, updatedRequest).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your request has been updated!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      navigate("/dashboard");
+    });
   };
 
   return (

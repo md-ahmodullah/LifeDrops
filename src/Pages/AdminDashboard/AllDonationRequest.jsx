@@ -1,29 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Lottie from "lottie-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
-import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useUsers from "../../Hooks/useUsers";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function AllDonationRequest() {
   const [showBtn, setShowBtn] = useState(true);
   const [status, setStatus] = useState("All");
-  const [allDonations] = useAllDonationRequest();
   const [users] = useUsers();
-  const [filterDonations, setFilterDonations] = useState(allDonations);
-  useEffect(() => {
-    axios
-      .get(
-        `https://life-drops-server-seven.vercel.app/donationRequest?status=${status}`
-      )
-      .then((res) => setFilterDonations(res.data));
-  }, [status]);
+  const axiosSecure = useAxiosSecure();
+
+  const { data: allDonations = [], refetch } = useQuery({
+    queryKey: ["allDonations", status],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/donationRequest?status=${status}`);
+      return res.data;
+    },
+  });
 
   const handleStatusChange = (e) => {
     const selectedStatus = e.target.value;
@@ -41,27 +42,16 @@ export default function AllDonationRequest() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://life-drops-server-seven.vercel.app/donationRequest/${_id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(),
+        axiosSecure.delete(`/donationRequest/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your request has been deleted.",
+              icon: "success",
+            });
+            refetch();
           }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your request has been deleted.",
-                icon: "success",
-              });
-              refetch();
-            }
-          });
+        });
       }
     });
   };
@@ -124,7 +114,7 @@ export default function AllDonationRequest() {
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  All Donation Request({filterDonations.length})
+                  All Donation Request({allDonations.length})
                 </h1>
                 <p className="text-xs text-red-500 font-medium w-11/12">
                   Every Drop Counts. Donate Blood, Save Lives
@@ -145,7 +135,7 @@ export default function AllDonationRequest() {
             </div>
           </div>
           <div>
-            {filterDonations.length !== 0 ? (
+            {allDonations.length !== 0 ? (
               <>
                 <div className="overflow-x-auto pt-6">
                   <table className="table table-xs">
@@ -161,7 +151,7 @@ export default function AllDonationRequest() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filterDonations.map((myDonation, i) => (
+                      {allDonations.map((myDonation, i) => (
                         <tr key={myDonation._id}>
                           <th>{i + 1}</th>
                           <td>{myDonation.name}</td>

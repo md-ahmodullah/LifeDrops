@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import JoditEditorContent from "../../Components/JoditEditor";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
@@ -13,6 +14,7 @@ export default function AddBlog() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [users] = useUsers();
+  const axiosSecure = useAxiosSecure();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,17 +29,10 @@ export default function AddBlog() {
       content,
       status,
     };
-    console.log(blog);
 
-    fetch("https://life-drops-server-seven.vercel.app/blogs", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(blog),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    axiosSecure
+      .post("https://life-drops-server-seven.vercel.app/blogs", blog)
+      .then((res) => {
         Swal.fire({
           position: "center",
           icon: "success",

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useBlogs from "../Hooks/useBlogs";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Blogs() {
-  const [blogs] = useBlogs();
+  const [blogs] = useBlogs((status = "published"));
   return (
     <>
       <CustomHelmet title={"LifeDrops | Blogs"} />

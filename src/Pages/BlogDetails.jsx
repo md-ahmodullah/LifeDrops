@@ -2,8 +2,8 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
-import { IoShareSocialSharp } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { IoChevronBackOutline, IoShareSocialSharp } from "react-icons/io5";
+import { Link, useParams } from "react-router-dom";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function BlogDetails() {
   const [blog, setBlog] = useState({});
@@ -17,9 +17,18 @@ export default function BlogDetails() {
   return (
     <>
       <CustomHelmet title={"LifeDrops | Blog Details"} />
-      <section className="w-3/5 mx-auto py-3">
+      <section className="w-full md:w-3/4 lg:w-3/5 mx-auto py-3">
+        <Link
+          to="/blogs"
+          className="w-36 flex items-center gap-1 text-gray-500 pb-3 px-4"
+        >
+          <IoChevronBackOutline />
+          Back
+        </Link>
         <div className="px-4">
-          <h1 className="text-3xl font-bold">{blog?.title}</h1>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">
+            {blog?.title}
+          </h1>
           <div className="flex items-center justify-between py-4 text-gray-400">
             <div className="flex gap-3 items-center">
               <img

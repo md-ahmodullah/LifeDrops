@@ -14,8 +14,9 @@ export default function Profile() {
   const [upazilas] = useUpazila();
   const [isEditable, setIsEditable] = useState(false);
   const navigate = useNavigate();
-  const [users] = useUsers();
+  const [users, refetch] = useUsers();
   const id = users?._id;
+
   const handleEdit = () => {
     setIsEditable(true);
   };
@@ -59,6 +60,7 @@ export default function Profile() {
               showConfirmButton: false,
               timer: 2000,
             });
+            refetch();
           });
       });
   };
