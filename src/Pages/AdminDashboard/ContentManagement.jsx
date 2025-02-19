@@ -8,8 +8,11 @@ import content from "../../assets/images/content-management.png";
 import useAdmin from "../../Hooks/useAdmin";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useUsers from "../../Hooks/useUsers";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function ContentManagement() {
   const [status, setStatus] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const blogsPerPage = 5;
   const [users] = useUsers();
   const [isAdmin] = useAdmin();
   const axiosSecure = useAxiosSecure();
@@ -78,6 +81,16 @@ export default function ContentManagement() {
       }
     });
   };
+  const totalPages = Math.ceil(blogs.length / blogsPerPage);
+
+  const paginatedBlogs = blogs.slice(
+    (currentPage - 1) * blogsPerPage,
+    currentPage * blogsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleStatusChange = (e) => {
     const selectedStatus = e.target.value;
@@ -85,6 +98,7 @@ export default function ContentManagement() {
   };
   return (
     <>
+      <CustomHelmet title={"Dashboard | Content Management"} />
       <section className="w-full md:w-11/12 mx-auto py-6 font-poppins">
         <div className="flex items-center justify-between gap-4 md:gap-0">
           <div className="flex items-center gap-2 px-4">
@@ -139,7 +153,7 @@ export default function ContentManagement() {
               </tr>
             </thead>
             <tbody>
-              {blogs.map((blog) => (
+              {paginatedBlogs.map((blog) => (
                 <tr key={blog._id}>
                   <td>
                     <div className="flex items-center gap-3">
@@ -195,6 +209,21 @@ export default function ContentManagement() {
             </tbody>
           </table>
         </div>
+        {totalPages > 1 && (
+          <div className="join flex items-center justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`join-item btn ${
+                  currentPage === index + 1 ? "bg-red-700 text-white" : ""
+                } `}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

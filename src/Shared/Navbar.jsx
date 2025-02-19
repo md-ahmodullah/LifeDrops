@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../Provider/AuthProvider";
-
 import logo4 from "../assets/logo/logo4.png";
 import useUsers from "../Hooks/useUsers";
+import { AuthContext } from "../Provider/AuthProvider";
 export default function Navbar() {
+  const { user, logOut } = useContext(AuthContext);
   const links = (
     <>
       <NavLink to="">Home</NavLink>
       <NavLink to="/donationRequests">Donation Requests</NavLink>
       <NavLink to="/blogs">Blogs</NavLink>
+      {user && <NavLink to="/funding">Funding</NavLink>}
     </>
   );
 
-  const { user, logOut } = useContext(AuthContext);
   const [users] = useUsers();
   const handleLogOut = () => {
     logOut();

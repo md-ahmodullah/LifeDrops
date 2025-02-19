@@ -1,32 +1,57 @@
-import axios from "axios";
 import Lottie from "lottie-react";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDonationRequest from "../../Hooks/useDonationRequest";
-import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
-export default function MyDonationRequest() {
-  const [myDonations] = useDonationRequest("");
-  const [myDonationRequest, setMyDonationRequest] = useState(myDonations);
+export default function myDonations() {
+  const [myDonations, refetch] = useDonationRequest("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const donationPerPage = 3;
   const [status, setStatus] = useState("All");
-  const { user } = useContext(AuthContext);
-  const email = user?.email;
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://life-drops-server-seven.vercel.app/donationRequest?status=${status}`,
-        {
-          params: { requesterEmail: email },
-        }
-      )
-      .then((res) => setMyDonationRequest(res.data));
-  }, [status]);
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/donationRequest/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your request has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
+      }
+    });
+  };
+
+  const totalPages = Math.ceil(myDonations.length / donationPerPage);
+
+  const paginatedDonation = myDonations.slice(
+    (currentPage - 1) * donationPerPage,
+    currentPage * donationPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleStatusChange = (e) => {
     const selectedStatus = e.target.value;
@@ -50,7 +75,7 @@ export default function MyDonationRequest() {
               </div>
               <div>
                 <h1 className="text-base lg:text-2xl text-gray-700 font-bold">
-                  Your All Donation Request({myDonationRequest.length})
+                  Your All Donation Request({myDonations.length})
                 </h1>
                 <p className="text-xs text-red-500 font-medium w-11/12">
                   Every Drop Counts. Donate Blood, Save Lives
@@ -71,7 +96,7 @@ export default function MyDonationRequest() {
             </div>
           </div>
           <div>
-            {myDonationRequest.length !== 0 ? (
+            {myDonations.length !== 0 ? (
               <>
                 <div className="overflow-x-auto pt-6">
                   <table className="table table-xs">
@@ -87,7 +112,7 @@ export default function MyDonationRequest() {
                       </tr>
                     </thead>
                     <tbody>
-                      {myDonationRequest.map((myDonation, i) => (
+                      {paginatedDonation.map((myDonation, i) => (
                         <tr key={myDonation._id}>
                           <th>{i + 1}</th>
                           <td>{myDonation.name}</td>
@@ -96,19 +121,21 @@ export default function MyDonationRequest() {
                           <td>{myDonation.blood}</td>
                           <td>{myDonation.status}</td>
                           <td className="flex items-center gap-2 pb-4">
-                            <Link to="/">
+                            <Link to={`/details/${myDonation._id}`}>
                               <FaEye
                                 className="text-base text-green-700"
                                 title="View"
                               />
                             </Link>
-                            <Link to="/">
+                            <Link to={`/update/${myDonation._id}`}>
                               <FaEdit
                                 className="text-base text-blue-600"
                                 title="Edit"
                               />
                             </Link>
-                            <button>
+                            <button
+                              onClick={() => handleDelete(myDonation._id)}
+                            >
                               <MdDelete
                                 className="text-base text-red-600"
                                 title="Delete"
@@ -133,6 +160,21 @@ export default function MyDonationRequest() {
             )}
           </div>
         </div>
+        {totalPages > 1 && (
+          <div className="join flex items-center justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`join-item btn ${
+                  currentPage === index + 1 ? "bg-red-700 text-white" : ""
+                } `}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

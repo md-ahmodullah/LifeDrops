@@ -7,6 +7,7 @@ import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function AddBlog() {
   const [content, setContent] = useState("");
   const [districts] = useDistricts();
@@ -30,68 +31,69 @@ export default function AddBlog() {
       status,
     };
 
-    axiosSecure
-      .post("https://life-drops-server-seven.vercel.app/blogs", blog)
-      .then((res) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your blog has been created!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        form.reset();
-        setContent("");
+    axiosSecure.post("/blogs", blog).then((res) => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your blog has been created!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      form.reset();
+      setContent("");
+    });
   };
   return (
-    <div className="bg-base-300 font-poppins min-h-screen py-6">
-      <div className="space-y-1 lg:pt-5 w-11/12 md:w-3/4 mx-auto">
-        <h1 className="text-2xl font-bold pb-5">Add Blog</h1>
-        <div className="border border-white shadow-md rounded-sm bg-base-200">
-          <form onSubmit={handleSubmit} className="p-3 lg:p-6">
-            <div>
-              <label className="label">
-                <span className="label-text text-black font-semibold">
-                  Title
-                </span>
-              </label>
-              <input
-                type="text"
-                placeholder="Title"
-                name="title"
-                className="w-full outline-none rounded-sm border px-4 py-2 bg-white border-none text-black placeholder:text-gray-500 focus:border-red-200"
-                required
-              />
-            </div>
-            <div>
-              <label className="label">
-                <span className="label-text text-black font-semibold">
-                  Thumbnail Image
-                </span>
-              </label>
-              <input
-                type="text"
-                placeholder="Thumbnail Image"
-                name="thumbnail"
-                className="w-full outline-none rounded-sm border px-4 py-2 bg-white border-none text-black placeholder:text-gray-500 focus:border-red-200"
-                required
-              />
-            </div>
-            <div className="py-2">
-              <label className="label">
-                <span className="label-text text-black font-semibold">
-                  Content
-                </span>
-              </label>
-              <JoditEditorContent content={content} setContent={setContent} />
-            </div>
-            <button className="w-full btn bg-red-600 text-white font-bold hover:bg-blue-600">
-              Create Blog
-            </button>
-          </form>
+    <>
+      <CustomHelmet title={"Dashboard | Add Blogs"} />
+      <div className="bg-base-300 font-poppins min-h-screen py-6">
+        <div className="space-y-1 lg:pt-5 w-11/12 md:w-3/4 mx-auto">
+          <h1 className="text-2xl font-bold pb-5">Add Blog</h1>
+          <div className="border border-white shadow-md rounded-sm bg-base-200">
+            <form onSubmit={handleSubmit} className="p-3 lg:p-6">
+              <div>
+                <label className="label">
+                  <span className="label-text text-black font-semibold">
+                    Title
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  className="w-full outline-none rounded-sm border px-4 py-2 bg-white border-none text-black placeholder:text-gray-500 focus:border-red-200"
+                  required
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text text-black font-semibold">
+                    Thumbnail Image
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Thumbnail Image"
+                  name="thumbnail"
+                  className="w-full outline-none rounded-sm border px-4 py-2 bg-white border-none text-black placeholder:text-gray-500 focus:border-red-200"
+                  required
+                />
+              </div>
+              <div className="py-2">
+                <label className="label">
+                  <span className="label-text text-black font-semibold">
+                    Content
+                  </span>
+                </label>
+                <JoditEditorContent content={content} setContent={setContent} />
+              </div>
+              <button className="w-full btn bg-red-600 text-white font-bold hover:bg-blue-600">
+                Create Blog
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

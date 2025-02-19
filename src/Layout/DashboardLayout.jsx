@@ -13,7 +13,7 @@ import useDonationRequest from "../Hooks/useDonationRequest";
 import usePendingRequest from "../Hooks/usePendingRequest";
 import useVolunteer from "../Hooks/useVolunteer";
 
-export default function Dashboard() {
+export default function DashboardLayout() {
   const [myDonations] = useDonationRequest();
   const [AllDonationRequest] = useAllDonationRequest();
   const [pendingRequest] = usePendingRequest();
@@ -25,19 +25,19 @@ export default function Dashboard() {
       {isAdmin || isVolunteer ? (
         <>
           <NavLink
+            end
+            to="/dashboard"
+            className="flex gap-2 items-center text-gray-100"
+          >
+            <FaHome className="text-lg" />
+            {isAdmin ? "Admin" : "Volunteer"} Home
+          </NavLink>
+          <NavLink
             to="/dashboard/profile"
             className="flex gap-2 items-center text-gray-100"
           >
             <FaUser className="text-base" />
             Profile
-          </NavLink>
-          <NavLink
-            end
-            to="/dashboard/adminHome"
-            className="flex gap-2 items-center text-gray-100"
-          >
-            <FaHome className="text-lg" />
-            {isAdmin ? "Admin" : "Volunteer"} Home
           </NavLink>
           {isAdmin && (
             <NavLink
@@ -150,6 +150,7 @@ export default function Dashboard() {
             </div>
             <div className="px-3">
               <p className="text-xl md:text-2xl font-bold text-gray-200">
+                {isAdmin ? "Admin " : isVolunteer ? "Volunteer " : "Donor "}
                 Dashboard
               </p>
             </div>

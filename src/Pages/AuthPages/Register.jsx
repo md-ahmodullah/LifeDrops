@@ -101,7 +101,13 @@ export default function Register() {
             });
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              Swal.fire("Register Successfully!");
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Register Successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
               navigate("/");
             }
           });

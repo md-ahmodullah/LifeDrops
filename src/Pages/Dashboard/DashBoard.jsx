@@ -6,7 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import AdminHome from "../AdminDashboard/AdminHome";
 import DonorHome from "./DonorHome";
 
-export default function DashboardLayout() {
+export default function Dashboard() {
   const { user } = useContext(AuthContext);
   const [users] = useAllUsers();
   const [isAdmin] = useAdmin();

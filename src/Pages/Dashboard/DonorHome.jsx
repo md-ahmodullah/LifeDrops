@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
 import BtnLink from "../../Components/Reusable/BtnLink";
 import SmBtn from "../../Components/Reusable/SmBtn";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDonationRequest from "../../Hooks/useDonationRequest";
 import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
@@ -18,6 +19,7 @@ export default function DonorHome() {
   const [showBtn, setShowBtn] = useState(true);
   const { user } = useContext(AuthContext);
   const [myDonations, refetch] = useDonationRequest();
+  const axiosSecure = useAxiosSecure();
 
   const handleDelete = (_id) => {
     Swal.fire({
@@ -30,27 +32,16 @@ export default function DonorHome() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://life-drops-server-seven.vercel.app/donationRequest/${_id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(),
+        axiosSecure.delete(`/donationRequest/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your request has been deleted.",
+              icon: "success",
+            });
+            refetch();
           }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your request has been deleted.",
-                icon: "success",
-              });
-              refetch();
-            }
-          });
+        });
       }
     });
   };

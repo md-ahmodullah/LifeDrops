@@ -28,7 +28,13 @@ export default function Login() {
       .then((result) => {
         const newUser = result.user;
         setUser(newUser);
-        Swal.fire("Login Successfully!");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate(redirect, { replace: true });
       })
       .catch((error) => {

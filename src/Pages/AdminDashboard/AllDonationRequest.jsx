@@ -15,6 +15,8 @@ import deep from "/public/deep.json";
 export default function AllDonationRequest() {
   const [showBtn, setShowBtn] = useState(true);
   const [status, setStatus] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const donationsPerPage = 10;
   const [users] = useUsers();
   const axiosSecure = useAxiosSecure();
 
@@ -96,6 +98,16 @@ export default function AllDonationRequest() {
         refetch();
       });
   };
+  const totalPages = Math.ceil(allDonations.length / donationsPerPage);
+
+  const paginatedDonation = allDonations.slice(
+    (currentPage - 1) * donationsPerPage,
+    currentPage * donationsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -104,7 +116,7 @@ export default function AllDonationRequest() {
   };
   return (
     <>
-      <CustomHelmet title={"Dashboard | My Donation Request"} />
+      <CustomHelmet title={"Dashboard | All Donation Request"} />
       <section className="font-poppins w-11/12 mx-auto">
         <div className="py-5">
           <div className="flex items-center justify-between">
@@ -136,61 +148,59 @@ export default function AllDonationRequest() {
           </div>
           <div>
             {allDonations.length !== 0 ? (
-              <>
-                <div className="overflow-x-auto pt-6">
-                  <table className="table table-xs">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Group</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+              <div className="overflow-x-auto pt-6">
+                <table className="table table-xs">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Location</th>
+                      <th>Date</th>
+                      <th>Group</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedDonation.map((myDonation, i) => (
+                      <tr key={myDonation._id}>
+                        <th>{i + 1}</th>
+                        <td>{myDonation.name}</td>
+                        <td>{myDonation.address}</td>
+                        <td>{formatDate(myDonation.date)}</td>
+                        <td>{myDonation.blood}</td>
+                        <td>{myDonation.status}</td>
+                        {users?.role === "Admin" ? (
+                          <td className="flex items-center gap-2 pb-4">
+                            <Link to={`/details/${myDonation._id}`}>
+                              <FaEye
+                                className="text-base text-green-700"
+                                title="View"
+                              />
+                            </Link>
+                            <Link to={`/update/${myDonation._id}`}>
+                              <FaEdit
+                                className="text-base text-blue-600"
+                                title="Edit"
+                              />
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(myDonation._id)}
+                            >
+                              <MdDelete
+                                className="text-base text-red-600"
+                                title="Delete"
+                              />
+                            </button>
+                          </td>
+                        ) : (
+                          <td className="text-red-600">Not Allowed</td>
+                        )}
                       </tr>
-                    </thead>
-                    <tbody>
-                      {allDonations.map((myDonation, i) => (
-                        <tr key={myDonation._id}>
-                          <th>{i + 1}</th>
-                          <td>{myDonation.name}</td>
-                          <td>{myDonation.address}</td>
-                          <td>{formatDate(myDonation.date)}</td>
-                          <td>{myDonation.blood}</td>
-                          <td>{myDonation.status}</td>
-                          {users?.role === "Admin" ? (
-                            <td className="flex items-center gap-2 pb-4">
-                              <Link to={`/details/${myDonation._id}`}>
-                                <FaEye
-                                  className="text-base text-green-700"
-                                  title="View"
-                                />
-                              </Link>
-                              <Link to={`/update/${myDonation._id}`}>
-                                <FaEdit
-                                  className="text-base text-blue-600"
-                                  title="Edit"
-                                />
-                              </Link>
-                              <button
-                                onClick={() => handleDelete(myDonation._id)}
-                              >
-                                <MdDelete
-                                  className="text-base text-red-600"
-                                  title="Delete"
-                                />
-                              </button>
-                            </td>
-                          ) : (
-                            <td className="text-red-600">Not Allowed</td>
-                          )}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div className="min-h-[400px] flex flex-col items-center justify-center">
                 <h1 className="text-xl font-semibold pb-3 pt-10 md:pt-0">
@@ -203,6 +213,21 @@ export default function AllDonationRequest() {
             )}
           </div>
         </div>
+        {totalPages > 1 && (
+          <div className="join flex items-center justify-center pt-3">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`join-item btn ${
+                  currentPage === index + 1 ? "bg-red-700 text-white" : ""
+                } `}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

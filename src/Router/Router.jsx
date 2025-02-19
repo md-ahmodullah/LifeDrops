@@ -5,14 +5,14 @@ import Register from "../Pages/AuthPages/Register";
 import Blogs from "../Pages/Blogs";
 import CreateDonation from "../Pages/Dashboard/CreateDonation";
 // import Dashboard from "../Pages/Dashboard/Dashboard";
-import Dashboard from "../Layout/Dashboard";
+import DashboardLayout from "../Layout/DashboardLayout";
 import AddBlog from "../Pages/AdminDashboard/AddBlog";
 import AdminHome from "../Pages/AdminDashboard/AdminHome";
 import AllDonationRequest from "../Pages/AdminDashboard/AllDonationRequest";
 import AllUsers from "../Pages/AdminDashboard/AllUsers";
 import ContentManagement from "../Pages/AdminDashboard/ContentManagement";
 import BlogDetails from "../Pages/BlogDetails";
-import DashboardLayout from "../Pages/Dashboard/DashBoardLayout";
+import Dashboard from "../Pages/Dashboard/DashBoard";
 import DonorHome from "../Pages/Dashboard/DonorHome";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import Profile from "../Pages/Dashboard/Profile";
@@ -22,6 +22,8 @@ import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/HomePage/Home";
 import Search from "../Pages/Search";
 import UpdatePage from "../Pages/UpdatePage";
+import Funding from "../PaymentGateWay/Funding";
+import GiveFund from "../PaymentGateWay/GiveFund";
 import PrivateRoute from "../Router/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -70,13 +72,29 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/funding",
+        element: (
+          <PrivateRoute>
+            <Funding />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/giveFund",
+        element: (
+          <PrivateRoute>
+            <GiveFund />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
     path: "/dashboard",
     element: (
       <PrivateRoute>
-        <Dashboard />
+        <DashboardLayout />
       </PrivateRoute>
     ),
     children: [
@@ -84,7 +102,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <DashboardLayout />
+            <Dashboard />
           </PrivateRoute>
         ),
       },

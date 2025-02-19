@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
@@ -5,6 +6,19 @@ import usePendingRequest from "../Hooks/usePendingRequest";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function DonationRequest() {
   const [pendingRequest] = usePendingRequest();
+  const [currentPage, setCurrentPage] = useState(1);
+  const doantionPerPage = 4;
+
+  const totalPages = Math.ceil(pendingRequest.length / doantionPerPage);
+
+  const paginatedDonation = pendingRequest.slice(
+    (currentPage - 1) * doantionPerPage,
+    currentPage * doantionPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -15,7 +29,7 @@ export default function DonationRequest() {
   return (
     <>
       <CustomHelmet title={"LifeDrops | Donation Request"} />
-      <div className="">
+      <div>
         <div className="flex items-center gap-2 py-5 md:pt-6 px-6 justify-center">
           <div>
             <img src={logo4} alt="Blood Logo" className="w-8 h-11" />
@@ -46,7 +60,7 @@ export default function DonationRequest() {
                     </tr>
                   </thead>
                   <tbody>
-                    {pendingRequest.map((pendig, i) => (
+                    {paginatedDonation.map((pendig, i) => (
                       <tr key={pendig?._id}>
                         <th>{i + 1}</th>
                         <td>{pendig?.name}</td>
@@ -81,6 +95,21 @@ export default function DonationRequest() {
           )}
         </div>
       </div>
+      {totalPages > 1 && (
+        <div className="join flex items-center justify-center pb-3">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              className={`join-item btn ${
+                currentPage === index + 1 ? "bg-red-700 text-white" : ""
+              } `}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </>
   );
 }

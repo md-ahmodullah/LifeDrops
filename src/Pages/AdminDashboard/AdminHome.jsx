@@ -1,33 +1,22 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
 import { RiFundsFill } from "react-icons/ri";
 import logo4 from "../../assets/logo/logo4.png";
 import useAdmin from "../../Hooks/useAdmin";
 import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
-import useAllUsers from "../../Hooks/useAllUsers";
+import useAllUsersOnly from "../../Hooks/useAllUsersOnly";
 import { AuthContext } from "../../Provider/AuthProvider";
+import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function AdminHome() {
-  const [myDonations, setMyDonations] = useState([]);
-  const { user } = useContext(AuthContext);
-  const [users] = useAllUsers();
+  const [allUsersOnly] = useAllUsersOnly();
   const [allDonations] = useAllDonationRequest();
   const [isAdmin] = useAdmin();
-
-  useEffect(() => {
-    const userEmail = user?.email;
-    if (userEmail) {
-      axios
-        .get("https://life-drops-server-seven.vercel.app/donationRequest", {
-          params: { requesterEmail: userEmail },
-        })
-        .then((res) => setMyDonations(res.data));
-    }
-  }, [user]);
+  const { user } = useContext(AuthContext);
 
   return (
     <>
+      <CustomHelmet title={"Dashboard | Home"} />
       <section className="w-11/12 mx-auto py-5 md:py-8 font-poppins">
         <div className="">
           <h1 className="text-xl md:text-3xl font-bold text-center text-red-700 uppercase">
@@ -54,9 +43,11 @@ export default function AdminHome() {
                 <FaUsers className="text-5xl" />
               </div>
               <div className="stat-title">Total Donors</div>
-              <div className="stat-value text-blue-600">{users.length}</div>
+              <div className="stat-value text-blue-600">
+                {allUsersOnly.length}
+              </div>
               <div className="stat-desc">
-                {users.length}% more than last month
+                {allUsersOnly.length}% more than last month
               </div>
             </div>
             <div className="stat bg-base-200 rounded m-4 shadow-md">

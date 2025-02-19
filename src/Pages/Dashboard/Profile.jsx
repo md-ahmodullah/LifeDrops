@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import avatar from "../../assets/images/avatar.png";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
@@ -10,12 +11,13 @@ const image_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 export default function Profile() {
   const [logginUser, setLogginUser] = useState(null);
+  const [isEditable, setIsEditable] = useState(false);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
-  const [isEditable, setIsEditable] = useState(false);
   const navigate = useNavigate();
   const [users, refetch] = useUsers();
   const id = users?._id;
+  const axiosSecure = useAxiosSecure();
 
   const handleEdit = () => {
     setIsEditable(true);
@@ -44,24 +46,16 @@ export default function Profile() {
       .then((data) => {
         const photoURL = data.data.display_url;
         const updateUserInfo = { name, photoURL, blood, district, upazila };
-        fetch(`https://life-drops-server-seven.vercel.app/users/${id}`, {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(updateUserInfo),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Your profile has been updated!",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            refetch();
+        axiosSecure.put(`/users/${id}`, updateUserInfo).then((res) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your profile has been updated!",
+            showConfirmButton: false,
+            timer: 2000,
           });
+          refetch();
+        });
       });
   };
   return (
