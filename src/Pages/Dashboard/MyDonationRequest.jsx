@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
@@ -9,16 +10,26 @@ import logo4 from "../../assets/logo/logo4.png";
 import Loading from "../../Components/Loading";
 import SmBtn from "../../Components/Reusable/SmBtn";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useDonationRequest from "../../Hooks/useDonationRequest";
+import { AuthContext } from "../../Provider/AuthProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function myDonations() {
-  const [myDonations, refetch] = useDonationRequest("");
+  const [status, setStatus] = useState("All");
   const [showBtn, setShowBtn] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const donationPerPage = 3;
-  const [status, setStatus] = useState("All");
   const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
+  const userEmail = user?.email;
+  const { data: myDonations = [], refetch } = useQuery({
+    queryKey: ["myDonations", status],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/donationRequest", {
+        params: { requesterEmail: userEmail, status: status },
+      });
+      return res.data;
+    },
+  });
 
   const handleDelete = (_id) => {
     Swal.fire({
@@ -92,20 +103,19 @@ export default function myDonations() {
     setCurrentPage(page);
   };
 
-  const handleStatusChange = (e) => {
-    const selectedStatus = e.target.value;
-    setStatus(selectedStatus);
-  };
-
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
 
-  if (myDonations.length === 0) {
+  if (!myDonations) {
     return <Loading />;
   }
+  const handleStatusChange = (e) => {
+    const selectedStatus = e.target.value;
+    setStatus(selectedStatus);
+  };
   return (
     <>
       <CustomHelmet title={"Dashboard | My Donation Request"} />

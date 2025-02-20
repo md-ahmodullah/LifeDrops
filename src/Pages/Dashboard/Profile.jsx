@@ -84,7 +84,7 @@ export default function Profile() {
               </p>
               <h1 className="text-xl md:text-2xl font-bold text-gray-200 uppercase">
                 {users?.name}{" "}
-                <sup className="text-xs font-normal text-blue-300 capitalize">
+                <sup className="text-xs font-normal text-gray-200 capitalize">
                   [{role}]
                 </sup>
               </h1>

@@ -1,10 +1,10 @@
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useContext, useEffect, useState } from "react";
-import { IoChevronBackOutline } from "react-icons/io5";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import avatar from "../assets/images/avatar.png";
+import BackButton from "../Components/Reusable/BackButton";
 import { AuthContext } from "../Provider/AuthProvider";
 import CustomHelmet from "../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
@@ -13,6 +13,8 @@ export default function DetailsPage() {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location?.state?.from?.pathname || "/dashboard";
   useEffect(() => {
     axios
       .get(`https://life-drops-server-seven.vercel.app/donationRequest/${id}`)
@@ -42,7 +44,7 @@ export default function DetailsPage() {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/donationRequests");
+        navigate(redirect, { replace: true });
       });
     document.getElementById("my_modal_5").close();
   };
@@ -51,13 +53,7 @@ export default function DetailsPage() {
       <CustomHelmet title={"LifeDrops | Request Details"} />
       <section className="bg-[url('https://i.ibb.co.com/Wn48j1L/searchbg.jpg')] bg-cover bg-center bg-no-repeat bg-red-900 bg-blend-multiply bg-opacity-90 mb-1 py-6 md:py-6">
         <div className="w-11/12 mx-auto">
-          <Link
-            to="/dashboard"
-            className="w-36 flex items-center gap-1 text-white"
-          >
-            <IoChevronBackOutline />
-            Back Dashboard
-          </Link>
+          <BackButton />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 lg:gap-10 w-11/12 mx-auto items-center">
           <div className="lg:col-span-4 w-full lg:w-3/4 mx-auto">

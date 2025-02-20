@@ -93,7 +93,7 @@ export default function DonorHome() {
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
-  if (myDonations.length === 0) {
+  if (!myDonations) {
     return <Loading />;
   }
   return (
