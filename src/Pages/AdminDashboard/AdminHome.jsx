@@ -3,18 +3,26 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
 import { RiFundsFill } from "react-icons/ri";
 import logo4 from "../../assets/logo/logo4.png";
+import Loading from "../../Components/Loading";
 import useAdmin from "../../Hooks/useAdmin";
 import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
 import useAllUsersOnly from "../../Hooks/useAllUsersOnly";
+import useFundings from "../../Hooks/useFundings";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useFund } from "../../Provider/FundProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function AdminHome() {
   const [allUsersOnly] = useAllUsersOnly();
   const [allDonations] = useAllDonationRequest();
   const [isAdmin] = useAdmin();
   const { user } = useContext(AuthContext);
-  const { totalFunding } = useFund();
+  const [fundings] = useFundings();
+  const totalFunding = fundings.reduce(
+    (total, fund) => total + parseInt(fund.amount),
+    0
+  );
+  if (totalFunding === 0) {
+    return <Loading />;
+  }
 
   return (
     <>

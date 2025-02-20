@@ -77,6 +77,7 @@ export default function AllUsers() {
       refetch();
     });
   };
+
   if (allUsers.length === 0) {
     return <Loading />;
   }

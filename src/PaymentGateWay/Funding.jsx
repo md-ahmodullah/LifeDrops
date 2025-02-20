@@ -30,11 +30,7 @@ export default function Funding() {
   //   useEffect(() => {
 
   //   }, [fundings]);
-  const totalFundings = fundings.reduce(
-    (total, fund) => total + parseInt(fund.amount),
-    0
-  );
-  setTotalFunding(totalFundings);
+
   const totalPages = Math.ceil(fundings.length / fundingPerPage);
 
   const paginatedFunding = fundings.slice(
