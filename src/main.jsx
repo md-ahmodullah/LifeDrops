@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import AuthProvider from "./Provider/AuthProvider";
+import { FundProvider } from "./Provider/FundProvider";
 import { router } from "./Router/Router";
 
 const queryClient = new QueryClient();
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
-          <RouterProvider router={router} />
+          <FundProvider>
+            <RouterProvider router={router} />
+          </FundProvider>
         </HelmetProvider>
       </QueryClientProvider>
     </AuthProvider>

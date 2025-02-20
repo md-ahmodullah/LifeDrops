@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 const axiosSecure = axios.create({
+  // baseURL: "https://life-drops-server-seven.vercel.app",
   baseURL: "https://life-drops-server-seven.vercel.app",
 });
 export default function useAxiosSecure() {

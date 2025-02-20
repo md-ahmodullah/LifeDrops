@@ -1,25 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import useFundings from "../Hooks/useFundings";
+import { useFund } from "../Provider/FundProvider";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Funding() {
   const [currentPage, setCurrentPage] = useState(1);
-  const fundings = [
-    {
-      name: "Ahmod",
-      amount: 100,
-      date: "03/15/2025",
-    },
-    {
-      name: "Foisal  Khan Bahadur Shah Ali dehlobi",
-      amount: 50,
-      date: "09/07/2025",
-    },
-    { name: "Jahid", amount: 200, date: "05/23/2025" },
-    { name: "Ibne Fulan", amount: 500, date: "02/21/2025" },
-  ];
-  const fundingPerPage = 3;
+  const { amount, setAmount, setTotalFunding } = useFund();
+  const [inputAmount, setInputAmount] = useState("");
+  const navigate = useNavigate();
+  const [fundings, refetch] = useFundings();
+  //   const fundings = [
+  //     {
+  //       name: "Ahmod",
+  //       amount: 100,
+  //       date: "03/15/2025",
+  //     },
+  //     {
+  //       name: "Foisal  Khan Bahadur Shah Ali dehlobi",
+  //       amount: 50,
+  //       date: "09/07/2025",
+  //     },
+  //     { name: "Jahid", amount: 200, date: "05/23/2025" },
+  //     { name: "Ibne Fulan", amount: 500, date: "02/21/2025" },
+  //   ];
+  const fundingPerPage = 5;
 
+  //   useEffect(() => {
+
+  //   }, [fundings]);
+  const totalFundings = fundings.reduce(
+    (total, fund) => total + parseInt(fund.amount),
+    0
+  );
+  setTotalFunding(totalFundings);
   const totalPages = Math.ceil(fundings.length / fundingPerPage);
 
   const paginatedFunding = fundings.slice(
@@ -34,6 +48,16 @@ export default function Funding() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleProceed = () => {
+    if (!inputAmount || inputAmount <= 0) {
+      alert("Enter a valid amount");
+      return;
+    }
+
+    setAmount(inputAmount);
+    navigate("/giveFund");
   };
   return (
     <>
@@ -53,14 +77,34 @@ export default function Funding() {
               </p>
             </div>
           </div>
-          <div className="">
-            <Link
-              to="/giveFund"
-              className="btn bg-red-700 text-white font-semibold outline-none hover:bg-blue-500"
-            >
-              Give Fund
-            </Link>
-          </div>
+
+          <button
+            onClick={() =>
+              document.getElementById("donation-modal").showModal()
+            }
+            className="btn bg-red-700 text-white font-semibold outline-none hover:bg-blue-500"
+          >
+            Give Fund
+          </button>
+
+          <dialog id="donation-modal" className="modal">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Enter Donation Amount</h3>
+              <input
+                type="number"
+                value={inputAmount}
+                onChange={(e) => setInputAmount(e.target.value)}
+                placeholder="Enter amount"
+                className="input input-bordered w-full mt-2"
+              />
+              <button
+                onClick={handleProceed}
+                className="btn bg-red-700 text-white font-semibold outline-none hover:bg-blue-500 mt-4"
+              >
+                Proceed to Pay
+              </button>
+            </div>
+          </dialog>
         </div>
 
         <div className="w-10/12 md:w-3/5 mx-auto pb-12">
@@ -81,7 +125,7 @@ export default function Funding() {
                       <tr key={pendig?._id}>
                         <th>{i + 1}</th>
                         <td>{pendig?.name}</td>
-                        <td>{pendig?.amount}</td>
+                        <td>${pendig?.amount}</td>
                         <td>{formatDate(pendig?.date)}</td>
                       </tr>
                     ))}

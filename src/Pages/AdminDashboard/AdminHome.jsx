@@ -7,12 +7,14 @@ import useAdmin from "../../Hooks/useAdmin";
 import useAllDonationRequest from "../../Hooks/useAllDonationRequest";
 import useAllUsersOnly from "../../Hooks/useAllUsersOnly";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { useFund } from "../../Provider/FundProvider";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 export default function AdminHome() {
   const [allUsersOnly] = useAllUsersOnly();
   const [allDonations] = useAllDonationRequest();
   const [isAdmin] = useAdmin();
   const { user } = useContext(AuthContext);
+  const { totalFunding } = useFund();
 
   return (
     <>
@@ -70,9 +72,9 @@ export default function AdminHome() {
                   </div>
                 </div>
               </div>
-              <div className="stat-value">Funding</div>
-              <div className="stat-title">81% Done</div>
-              <div className="stat-desc text-secondary">Will Add Soon</div>
+              <div className="stat-title">Fundings</div>
+              <div className="stat-value text-yellow-500">$ {totalFunding}</div>
+              <div className="stat-desc">61% Done</div>
             </div>
           </div>
         </div>
