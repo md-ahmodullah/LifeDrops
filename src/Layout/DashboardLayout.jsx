@@ -20,6 +20,9 @@ export default function DashboardLayout() {
   const [allUsersOnly] = useAllUsersOnly();
   const [isAdmin] = useAdmin();
   const [isVolunteer] = useVolunteer();
+  // if (isAdmin === null && isVolunteer === null) {
+  //   return <Loading />;
+  // }
   const links = (
     <>
       {isAdmin || isVolunteer ? (

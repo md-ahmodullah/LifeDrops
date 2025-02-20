@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import createDonation from "../../assets/images/create.png";
 import createDonation2 from "../../assets/images/create2.png";
+import Loading from "../../Components/Loading";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
 import useUsers from "../../Hooks/useUsers";
@@ -17,6 +18,9 @@ export default function CreateDonation() {
   const navigate = useNavigate();
   const [users] = useUsers();
   const isActive = users?.status;
+  if (!isActive) {
+    return <Loading />;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();

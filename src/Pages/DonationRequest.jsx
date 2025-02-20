@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import Loading from "../Components/Loading";
 import usePendingRequest from "../Hooks/usePendingRequest";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function DonationRequest() {
@@ -25,6 +26,10 @@ export default function DonationRequest() {
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
+
+  if (pendingRequest.length === 0) {
+    return <Loading />;
+  }
 
   return (
     <>

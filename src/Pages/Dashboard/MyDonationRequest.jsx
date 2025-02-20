@@ -6,12 +6,15 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import Loading from "../../Components/Loading";
+import SmBtn from "../../Components/Reusable/SmBtn";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDonationRequest from "../../Hooks/useDonationRequest";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 import deep from "/public/deep.json";
 export default function myDonations() {
   const [myDonations, refetch] = useDonationRequest("");
+  const [showBtn, setShowBtn] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const donationPerPage = 3;
   const [status, setStatus] = useState("All");
@@ -42,6 +45,42 @@ export default function myDonations() {
     });
   };
 
+  const handleDone = (id) => {
+    const status = "done";
+    const modified = { status };
+    axiosSecure.patch(`/donationRequest/${id}`, modified).then((res) => {
+      // if (res.data.modifiedCount){
+
+      // }
+      console.log(res.data);
+      console.log(id);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your request is done!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setShowBtn(false);
+      refetch();
+    });
+  };
+  const handleCancel = (id) => {
+    const status = "cancel";
+    const modified = { status };
+    axiosSecure.patch(`/donationRequest/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your request is cenceled!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setShowBtn(false);
+      refetch();
+    });
+  };
+
   const totalPages = Math.ceil(myDonations.length / donationPerPage);
 
   const paginatedDonation = myDonations.slice(
@@ -63,6 +102,10 @@ export default function myDonations() {
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
+
+  if (myDonations.length === 0) {
+    return <Loading />;
+  }
   return (
     <>
       <CustomHelmet title={"Dashboard | My Donation Request"} />
@@ -119,7 +162,25 @@ export default function myDonations() {
                           <td>{myDonation.address}</td>
                           <td>{formatDate(myDonation.date)}</td>
                           <td>{myDonation.blood}</td>
-                          <td>{myDonation.status}</td>
+                          {/* <td>{myDonation.status}</td> */}
+                          <td>
+                            {myDonation.status === "inprogress" && showBtn ? (
+                              <div className="space-x-1">
+                                <SmBtn
+                                  handler={() => handleDone(myDonation._id)}
+                                  text={"Done"}
+                                  color={"bg-blue-600"}
+                                />
+                                <SmBtn
+                                  handler={() => handleCancel(myDonation._id)}
+                                  text={"Cancel"}
+                                  color={"bg-red-600"}
+                                />
+                              </div>
+                            ) : (
+                              myDonation?.status
+                            )}
+                          </td>
                           <td className="flex items-center gap-2 pb-4">
                             <Link to={`/details/${myDonation._id}`}>
                               <FaEye

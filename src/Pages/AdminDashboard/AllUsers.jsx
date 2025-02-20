@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import Loading from "../../Components/Loading";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import CustomHelmet from "../../ReusableComponents/Helmet";
 
@@ -76,6 +77,9 @@ export default function AllUsers() {
       refetch();
     });
   };
+  if (allUsers.length === 0) {
+    return <Loading />;
+  }
 
   const totalPages = Math.ceil(allUsers.length / usersPerPage);
 

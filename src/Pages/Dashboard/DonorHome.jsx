@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import Loading from "../../Components/Loading";
 import BtnLink from "../../Components/Reusable/BtnLink";
 import SmBtn from "../../Components/Reusable/SmBtn";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -92,6 +93,9 @@ export default function DonorHome() {
     const datee = new Date(date);
     return datee.toLocaleDateString("en-US", options);
   };
+  if (myDonations.length === 0) {
+    return <Loading />;
+  }
   return (
     <>
       <CustomHelmet title={"Dashboard | Home"} />

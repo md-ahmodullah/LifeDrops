@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import avatar from "../assets/images/avatar.png";
 import logo4 from "../assets/logo/logo4.png";
 import useUsers from "../Hooks/useUsers";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -73,7 +74,7 @@ export default function Navbar() {
                   <div className="w-10 rounded-full">
                     <img
                       alt="profile"
-                      src={users?.photoURL}
+                      src={users?.photoURL || avatar}
                       title={user?.displayName}
                     />
                   </div>

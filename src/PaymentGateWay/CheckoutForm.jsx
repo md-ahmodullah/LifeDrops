@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -76,7 +77,6 @@ export default function CheckoutForm() {
               showConfirmButton: false,
               timer: 1500,
             });
-            navigate("/funding");
           }
         });
       }
@@ -85,6 +85,15 @@ export default function CheckoutForm() {
 
   return (
     <>
+      <div className="py-6">
+        <Link
+          to="/funding"
+          className="w-36 flex items-center gap-1 text-gray-500 pb-3 px-4"
+        >
+          <IoChevronBackOutline />
+          Back
+        </Link>
+      </div>
       <form onSubmit={handleSubmit}>
         <CardElement
           options={{

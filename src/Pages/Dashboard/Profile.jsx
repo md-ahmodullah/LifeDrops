@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import avatar from "../../assets/images/avatar.png";
+import Loading from "../../Components/Loading";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDistricts from "../../Hooks/useDistricts";
 import useUpazila from "../../Hooks/useUpazila";
@@ -12,12 +13,17 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 export default function Profile() {
   const [logginUser, setLogginUser] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [districts] = useDistricts();
   const [upazilas] = useUpazila();
   const navigate = useNavigate();
   const [users, refetch] = useUsers();
   const id = users?._id;
   const axiosSecure = useAxiosSecure();
+
+  // if (!loading) {
+  //   return <Loading />;
+  // }
 
   const handleEdit = () => {
     setIsEditable(true);
@@ -58,6 +64,11 @@ export default function Profile() {
         });
       });
   };
+
+  if (districts.length === 0 && upazilas.length === 0) {
+    return <Loading />;
+  }
+
   return (
     <>
       <CustomHelmet title={"Dashboard | Profile"} />
@@ -192,7 +203,6 @@ export default function Profile() {
                         defaultValue={users?.district}
                         required
                       >
-                        <option value="">{"will set"}</option>
                         {districts.map((district, i) => (
                           <option key={i} value={district?.name}>
                             {district?.name}
@@ -214,7 +224,6 @@ export default function Profile() {
                         defaultValue={users?.upazila}
                         required
                       >
-                        <option value="">{"will set"}</option>
                         {upazilas.map((upazila, i) => (
                           <option key={i} value={upazila?.name}>
                             {upazila?.name}

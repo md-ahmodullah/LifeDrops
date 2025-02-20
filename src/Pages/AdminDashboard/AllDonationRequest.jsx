@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Lottie from "lottie-react";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
@@ -8,6 +7,8 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo4 from "../../assets/logo/logo4.png";
+import Loading from "../../Components/Loading";
+import SmBtn from "../../Components/Reusable/SmBtn";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useUsers from "../../Hooks/useUsers";
 import CustomHelmet from "../../ReusableComponents/Helmet";
@@ -61,43 +62,37 @@ export default function AllDonationRequest() {
   const handleDone = (id) => {
     const status = "done";
     const modified = { status };
-    axios
-      .patch(
-        `https://life-drops-server-seven.vercel.app/donationRequest/${id}`,
-        modified
-      )
-      .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your request is done!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        setShowBtn(false);
-        refetch();
+    axiosSecure.patch(`/donationRequest/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your request is done!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      setShowBtn(false);
+      refetch();
+    });
   };
   const handleCancel = (id) => {
     const status = "cancel";
     const modified = { status };
-    axios
-      .patch(
-        `https://life-drops-server-seven.vercel.app/donationRequest/${id}`,
-        modified
-      )
-      .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your request is cenceled!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        setShowBtn(false);
-        refetch();
+    axiosSecure.patch(`donationRequest/${id}`, modified).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your request is cenceled!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      setShowBtn(false);
+      refetch();
+    });
   };
+
+  if (allDonations.length === 0) {
+    return <Loading />;
+  }
   const totalPages = Math.ceil(allDonations.length / donationsPerPage);
 
   const paginatedDonation = allDonations.slice(
@@ -169,7 +164,24 @@ export default function AllDonationRequest() {
                         <td>{myDonation.address}</td>
                         <td>{formatDate(myDonation.date)}</td>
                         <td>{myDonation.blood}</td>
-                        <td>{myDonation.status}</td>
+                        <td>
+                          {myDonation.status === "inprogress" && showBtn ? (
+                            <div className="space-x-1">
+                              <SmBtn
+                                handler={() => handleDone(myDonation._id)}
+                                text={"Done"}
+                                color={"bg-blue-600"}
+                              />
+                              <SmBtn
+                                handler={() => handleCancel(myDonation._id)}
+                                text={"Cancel"}
+                                color={"bg-red-600"}
+                              />
+                            </div>
+                          ) : (
+                            myDonation?.status
+                          )}
+                        </td>
                         {users?.role === "Admin" ? (
                           <td className="flex items-center gap-2 pb-4">
                             <Link to={`/details/${myDonation._id}`}>

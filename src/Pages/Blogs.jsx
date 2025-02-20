@@ -1,9 +1,13 @@
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
+import Loading from "../Components/Loading";
 import useBlogs from "../Hooks/useBlogs";
 import CustomHelmet from "../ReusableComponents/Helmet";
 export default function Blogs() {
   const [blogs] = useBlogs((status = "published"));
+  if (blogs.length === 0) {
+    return <Loading />;
+  }
   return (
     <>
       <CustomHelmet title={"LifeDrops | Blogs"} />

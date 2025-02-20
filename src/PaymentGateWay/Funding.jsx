@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo4 from "../assets/logo/logo4.png";
+import Loading from "../Components/Loading";
 import useFundings from "../Hooks/useFundings";
 import { useFund } from "../Provider/FundProvider";
 import CustomHelmet from "../ReusableComponents/Helmet";
@@ -59,6 +60,10 @@ export default function Funding() {
     setAmount(inputAmount);
     navigate("/giveFund");
   };
+
+  if (fundings.length === 0) {
+    return <Loading />;
+  }
   return (
     <>
       <CustomHelmet title={"LifeDrops | Fundings"} />

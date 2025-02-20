@@ -11,6 +11,9 @@ export default function Dashboard() {
   const [users] = useAllUsers();
   const [isAdmin] = useAdmin();
   const [isVolunteer] = useVolunteer();
+  // if (isAdmin === null && isVolunteer === null) {
+  //   return <Loading />;
+  // }
 
   return <div>{isAdmin || isVolunteer ? <AdminHome /> : <DonorHome />}</div>;
 }

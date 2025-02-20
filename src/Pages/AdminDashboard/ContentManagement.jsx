@@ -5,6 +5,7 @@ import { MdDelete, MdLibraryAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import content from "../../assets/images/content-management.png";
+import Loading from "../../Components/Loading";
 import useAdmin from "../../Hooks/useAdmin";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useUsers from "../../Hooks/useUsers";
@@ -81,6 +82,10 @@ export default function ContentManagement() {
       }
     });
   };
+
+  if (blogs.length === 0) {
+    return <Loading />;
+  }
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
 
   const paginatedBlogs = blogs.slice(
