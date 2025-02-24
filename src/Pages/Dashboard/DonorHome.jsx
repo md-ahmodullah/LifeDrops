@@ -122,7 +122,7 @@ export default function DonorHome() {
           {myDonations.length !== 0 ? (
             <>
               <div className="overflow-x-auto pt-6">
-                <table className="table table-xs">
+                <table className="table table-auto w-full">
                   <thead>
                     <tr>
                       <th></th>
@@ -139,8 +139,12 @@ export default function DonorHome() {
                       <tr key={myDonation._id}>
                         <th>{i + 1}</th>
                         <td>{myDonation.name}</td>
-                        <td>{myDonation.address}</td>
-                        <td>{formatDate(myDonation.date)}</td>
+                        <td className="min-w-[150px] whitespace-nowrap">
+                          {myDonation.address}
+                        </td>
+                        <td className="min-w-[150px] whitespace-nowrap">
+                          {formatDate(myDonation.date)}
+                        </td>
                         <td>{myDonation.blood}</td>
                         <td>
                           {myDonation.status === "inprogress" && showBtn ? (

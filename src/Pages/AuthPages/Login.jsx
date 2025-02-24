@@ -65,7 +65,7 @@ export default function Login() {
               <img src={login} alt="" />
             </div>
           </div>
-          <div className="px-5 md:pr-5 lg:px-8 space-y-8">
+          <div className="px-5 md:pr-5 lg:px-8 space-y-8 pb-10">
             <Link to="/" className="flex items-center gap-1 text-red-700">
               <IoChevronBackOutline />
               Back Home

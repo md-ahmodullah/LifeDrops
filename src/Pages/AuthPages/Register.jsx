@@ -142,7 +142,7 @@ export default function Register() {
               <img src={login2} alt="" className="hidden md:grid lg:hidden" />
             </div>
           </div>
-          <div className="px-5 md:pr-5 md:px-0 lg:px-8 space-y-8">
+          <div className="px-5 md:pr-5 md:px-0 lg:px-8 space-y-8 pb-10">
             <div className="space-y-2">
               <Link
                 to="/"

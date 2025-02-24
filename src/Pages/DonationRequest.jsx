@@ -52,7 +52,7 @@ export default function DonationRequest() {
           {pendingRequest.length !== 0 ? (
             <>
               <div className="overflow-x-auto pt-6">
-                <table className="table table-xs">
+                <table className="table table-auto w-full">
                   <thead>
                     <tr>
                       <th></th>
@@ -70,10 +70,12 @@ export default function DonationRequest() {
                         <th>{i + 1}</th>
                         <td>{pendig?.name}</td>
                         <td>{pendig?.address}</td>
-                        <td>{formatDate(pendig?.date)}</td>
+                        <td className="min-w-[150px] whitespace-nowrap">
+                          {formatDate(pendig?.date)}
+                        </td>
                         <td>{pendig?.blood}</td>
                         <td>{pendig?.status}</td>
-                        <td className="flex items-center gap-2 pb-4">
+                        <td className="flex items-center gap-2 pb-4 min-w-[150px] whitespace-nowrap">
                           <Link
                             to={`/details/${pendig._id}`}
                             className="flex items-center gap-1"

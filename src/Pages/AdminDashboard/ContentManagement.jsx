@@ -172,8 +172,12 @@ export default function ContentManagement() {
                       </div>
                     </div>
                   </td>
-                  <td>{blog.title}</td>
-                  <td>{blog.status}</td>
+                  <td className="min-w-[150px] whitespace-nowrap">
+                    {blog.title}
+                  </td>
+                  <td className="min-w-[150px] whitespace-nowrap">
+                    {blog.status}
+                  </td>
                   {users?.role === "Admin" ? (
                     <>
                       <th>
@@ -205,7 +209,9 @@ export default function ContentManagement() {
                     </>
                   ) : (
                     <>
-                      <td className="text-red-600">Not Allowed</td>
+                      <td className="min-w-[150px] whitespace-nowrap text-red-600">
+                        Not Allowed
+                      </td>
                       <td></td>
                     </>
                   )}

@@ -46,7 +46,7 @@ export default function AdminHome() {
             </div>
           </div>
         </div>
-        <div className="py-6">
+        <div className="py-6 pr-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="stat bg-base-200 rounded m-4 shadow-md">
               <div className="stat-figure text-primary">
